@@ -1,0 +1,20 @@
+.sidebar{
+    
+    position: fixed;
+    
+    background: var(--color-neutral);
+    z-index: 100;
+    transition: width 300ms;
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
+.main-content{
+    transition: margin-left 300ms;
+    
+    margin-top: 100px;
+    width: auto;
+}
+
+.header{
+    top: 0;
+    position: fixed;
+}

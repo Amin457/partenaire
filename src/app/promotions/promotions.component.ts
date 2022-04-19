@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Promo } from '../models/promotion-model';
+import { PromotionService } from '../services/promotion.service';
 
 @Component({
   selector: 'app-promotions',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PromotionsComponent implements OnInit {
 
-  constructor() { }
+  ApiImg= "http://localhost:3000/api/files/"
+  promotions:Promo[]=[];
+
+  constructor(private service:PromotionService) { }
 
   ngOnInit(): void {
+    this.service.Getall().subscribe(res=>this.promotions=res.data)
+    
   }
 
+  
+
+  
+   
 }

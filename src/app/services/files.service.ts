@@ -1,0 +1,21 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FilesService {
+
+  __url= 'http://localhost:3000/api/files/upload';
+
+  constructor(private http: HttpClient) { }
+
+  postFile(file:any):Observable<any>{
+
+    return this.http.post(this.__url,file);
+  }
+
+
+}
