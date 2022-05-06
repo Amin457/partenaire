@@ -1,20 +1,28 @@
 .sidebar{
-    
-    position: fixed;
-    
-    background: var(--color-neutral);
-    z-index: 100;
-    transition: width 300ms;
-    border-right: 1px solid rgba(0,0,0,0.2);
+    margin-top: 0%;
 }
 .main-content{
     transition: margin-left 300ms;
-    
-    margin-top: 100px;
-    width: auto;
+    width: 100%;
+    height: 100%;
+    background-color: #f4fefe;
+    margin-left: auto; margin-right: auto;
 }
 
+
+.main-content *{
+    padding-top: 30px;
+}
+
+/*
 .header{
     top: 0;
     position: fixed;
 }
+*/
+
+.main { 
+    width: 800px;
+    margin: 0 auto;
+}
+

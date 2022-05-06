@@ -20,7 +20,7 @@
 
 <div >
 <!-- list promotion Start -->
-<div class="col-lg-9 col-md-12" >
+<div class="col-lg-9 col-md-12" style="margin-left: auto; margin-right: auto;">
     <div class="row pb-3">
         <div class="col-12 pb-1">
             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </form>
-                <button type="button" class="btn btn-outline-success" [routerLink]="['addpromo']"> Ajouter une promotion</button>
+                <button type="button" class="btn btn-outline-primary" [routerLink]="['addpromo']"> Ajouter une promotion</button>
             </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 pb-1" *ngFor="let p of promotions">
@@ -42,12 +42,14 @@
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                     <img class="img-fluid w-100" src="{{ApiImg+p.image}}" alt="">
                 </div>
+                <!--
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                     <h6 class="text-truncate mb-3">{{p.nom}}</h6>
                 </div>
+                -->
                 <div class="card-footer d-flex justify-content-between bg-light border">
                     <div class="d-grid gap-2 col-12 mx-auto">
-                        <button type="button" class="btn btn-danger">Supprimer</button>
+                        <button type="button" class="btn btn-primary">Supprimer</button>
                       </div>
                     
                 </div>

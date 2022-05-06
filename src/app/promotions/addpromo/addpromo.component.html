@@ -1,45 +1,57 @@
-<div class="container">
-  
-    <section class="panel panel-default">
-  <div class="panel-heading"> 
-  <h3 class="panel-title">Ajouter une nouvelle promotion</h3> 
-  </div> 
-  <div class="panel-body">
-    
-  <form  enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
-  
-     <div class="form-group">
-      <label for="name" class="col-sm-3 control-label">Nom de la promotion</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" name="name" [(ngModel)]="name" placeholder="Nom">
-      </div>
-    </div> <!-- form-group // -->
-    
-    <div class="form-group">
-      <label for="about" class="col-sm-3 control-label">Description</label>
-      <div class="col-sm-9">
-        <textarea class="form-control" placeholder="Description" [(ngModel)]="description" name="description"></textarea>
-      </div>
-    </div> <!-- form-group // -->
-    
-    
-    <div class="form-group">
-      <label for="name" class="col-sm-3 control-label">Affiche de promotion</label>
-      <div class="col-sm-3">
-        <label class="control-label small" for="file_img">Format accépté (jpg/png):</label> 
-        <input type="file" name="file" (change)="onFileSelected($event)">
-      </div>
-    </div> <!-- form-group // -->
-    
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-9" class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-success" (click)="onUpload()">Ajouter</button>
-      </div>
-    </div> <!-- form-group // -->
-  </form>
-    
-  </div><!-- panel-body // -->
-  </section><!-- panel// -->
-  
-    
-  </div> <!-- container// -->
+<h2 class="titre">Ajouter une nouvelle promotion</h2>
+
+<div class="col-lg-7" style="margin-left: auto; margin-right: auto;">
+
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
+
+        <div class="form-group">
+          <label for="name" class="col-sm-3 control-label">Nom de la promotion</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="name" [(ngModel)]="name" placeholder="Nom">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="about" class="col-sm-3 control-label">Description</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" placeholder="Description" [(ngModel)]="description"
+              name="description"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="about" class="col-sm-3 control-label">Date début</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" placeholder="Date début" [(ngModel)]="dateDebut"
+              name="description"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="about" class="col-sm-3 control-label">Date Fin</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" placeholder="Date début" [(ngModel)]="dateFin"
+              name="description"></textarea>
+          </div>
+        </div> 
+
+        <div class="form-group">
+          <label for="name" class="col-sm-3 control-label">Affiche de promotion</label>
+          <div class="col-sm-3">
+            <label class="control-label small" for="file_img">Format accépté (jpg/png):</label>
+            <input type="file" name="file" (change)="onFileSelected($event)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9" class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary" (click)="onUpload()">Ajouter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

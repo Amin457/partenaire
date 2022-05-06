@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { JeuxComponent } from './jeux/jeux.component';
 import { ReclamationComponent } from './reclamation/reclamation.component';
@@ -22,14 +21,22 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HomeAllComponent } from './home-all/home-all.component';
 import { RepportReclamationsComponent } from './repport-reclamations/repport-reclamations.component';
-import { Chart } from 'chart.js';
+import { ChartsModule } from 'ng2-charts';
+import { DetailsGameComponent } from './details-game/details-game.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavbarComponent } from './navbar/navbar.component';
+
+
+
+
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     PromotionsComponent,
     JeuxComponent,
     ReclamationComponent,
@@ -41,7 +48,12 @@ import { Chart } from 'chart.js';
     HeaderComponent,
     SidebarComponent,
     HomeAllComponent,
-    RepportReclamationsComponent
+    RepportReclamationsComponent,
+    DetailsGameComponent,
+    DashboardComponent,
+    NavbarComponent,
+    
+    
     
   ],
   imports: [
@@ -55,7 +67,11 @@ import { Chart } from 'chart.js';
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
-    Chart,
+    ChartsModule,
+    MatDialogModule,
+    MatButtonModule
+   
+    
 
 
   ],

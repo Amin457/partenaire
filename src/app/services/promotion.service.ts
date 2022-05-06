@@ -8,8 +8,8 @@ import { Promo } from '../models/promotion-model';
 })
 export class PromotionService {
 
-  _url='http://localhost:3000/api/promotions/4';
-  _url1='http://localhost:3000/api/promotions';
+  _url='http://localhost:3000/api/promotions';
+  _url1='http://localhost:3000/api/promotions/4';
   
 
   constructor(private http:HttpClient) { }
