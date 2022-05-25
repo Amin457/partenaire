@@ -2,20 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cadeaux } from '../models/tab-cadeaux-model';
+import { Gagnants } from '../models/gagnants';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JeuxCadeauxService {
 
-  url='http://localhost:3000/api/cadeau/4'
-  url_add_gift='http://localhost:3000/api/cadeau/ajouterCadeau'
-  url_delete_gift='http://localhost:3000/api/cadeau'
+  url=environment.Api +'api/cadeau/'
+  url_add_gift=environment.Api +'api/cadeau/ajouterCadeau'
+  url_delete_gift=environment.Api +'api/cadeau/'
 
   constructor (private http:HttpClient) { }
 
-  GetCadeaux():Observable<any>{
-    return this.http.get<Cadeaux>(`${this.url}`);
+  GetCadeaux(id_part:number):Observable<any>{
+    return this.http.get<Cadeaux>(`${this.url}`+id_part);
   }
 
   addCadeau(cadeau:any):Observable<any>{
@@ -24,5 +26,17 @@ export class JeuxCadeauxService {
 
   DeleteCadeau(id_cadeau:number):Observable<any>{
     return this.http.patch<any>(`${this.url_delete_gift}/${id_cadeau}`,{});
+  }
+
+  getGagnants(id_part:number):Observable<any>{
+    return this.http.get<Gagnants>(`${this.url}`+`getGagnants/`+id_part);
+  }
+
+  getEtatJeux(id_part:number):Observable<any>{
+    return this.http.get<any>(`${this.url}`+`etat/`+id_part);
+  }
+
+  updateEtatJeux(id_part:number):Observable<any>{
+    return this.http.patch<any>(`${this.url}`+`updateEtatJeux/`+id_part,{});
   }
 }

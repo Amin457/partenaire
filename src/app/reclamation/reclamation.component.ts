@@ -6,6 +6,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Reclamation } from '../models/reclamation-model';
+import { Partenaire } from '../models/partenaire_model';
+import jwt_decode  from 'jwt-decode';
 
 @Component({
   selector: 'app-reclamation',
@@ -21,7 +23,9 @@ export class ReclamationComponent implements OnInit {
   
   @ViewChild(MatPaginator)paginator!: MatPaginator;
   @ViewChild(MatSort)sort!: MatSort;
-
+  partenaire!:Partenaire
+  token !: any
+  decoded: any;
   constructor(private service:ReclamationService, public root:ActivatedRoute) { }
 
   ngAfterViewInit(): void {
@@ -40,8 +44,13 @@ export class ReclamationComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.token=localStorage.getItem('token');
+    this.decoded = jwt_decode(this.token);
+    this.partenaire=this.decoded.result;
+    console.log(this.partenaire);
+
     this.dataSource = new MatTableDataSource();
-    this.service.Getreclamation().subscribe(res => { console.log('res',res.results); 
+    this.service.Getreclamation(this.partenaire.id_part).subscribe(res => { console.log('res',res.results); 
     this.dataSource.data = res.results } )
     console.log('datasource',this.dataSource);
     

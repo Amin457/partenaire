@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private _Url = "http://localhost:3000/api/partenaires/"
+  private _Url = environment.Api +"api/partenaires/"
   
   constructor(private router : Router, private http: HttpClient) { }
 

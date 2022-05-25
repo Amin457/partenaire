@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class FilesService {
 
-  __url= 'http://localhost:3000/api/files/upload';
+  __url= environment.Api +'api/files/upload';
 
   constructor(private http: HttpClient) { }
 

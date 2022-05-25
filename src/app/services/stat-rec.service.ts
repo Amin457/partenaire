@@ -3,17 +3,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reclamation } from '../models/reclamation-model';
 import { Datestat } from '../models/date-model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatRecService {
 
-  _url='http://localhost:3000/api/statRec/getNbAccueil'
-  url_prix='http://localhost:3000/api/statRec/getNbPrix'
-  url_qualité='http://localhost:3000/api/statRec/getNbQualite'
-  url_personnel='http://localhost:3000/api/statRec/getNbPersonel'
-  url_mois='http://localhost:3000/api/statRec/getNbRecParMoix'
+  _url=environment.Api +'api/statRec/getNbAccueil'
+  url_prix=environment.Api +'api/statRec/getNbPrix'
+  url_qualité=environment.Api +'api/statRec/getNbQualite'
+  url_personnel=environment.Api +'api/statRec/getNbPersonel'
+  url_mois=environment.Api +'api/statRec/getNbRecParMoix'
+  url_boutique=environment.Api +'api/statRec/getNbRecParBoutique'
 
   constructor(private http:HttpClient) { }
 
@@ -35,5 +37,9 @@ export class StatRecService {
 
   GetRecMois(date:Datestat):Observable<any>{
     return this.http.post<Datestat>(`${this.url_mois}`,date);
+  }
+
+  GetRecBoutique(date:Datestat):Observable<any>{
+    return this.http.post<Datestat>(`${this.url_boutique}`,date);
   }
 }

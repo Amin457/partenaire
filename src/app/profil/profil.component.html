@@ -1,0 +1,91 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+
+
+<h2 class="titre">Modifier votre profil !</h2>
+
+<div class="container rounded bg-white mt-5 mb-5" [formGroup]="form">
+    <div class="row">
+        <div class="col-md-4 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                    width="150px" src="{{ApiImg+img}}"><span class="font-weight-bold">{{nom}}</span><span
+                    class="text-black-50">{{mail}}</span><span>
+                </span></div>
+        </div>
+        <div class="col-md-8 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Les paramètres de profil</h4>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label for="about">Nom de l'organisme</label>
+                        <div>
+                            <input type="text" class="form-control" name="dateDebut" placeholder="Nom de l'organisme"
+                            formControlName="nom">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <label for="about">Fax</label>
+                        <div>
+                            <input type="text" class="form-control" name="dateDebut" placeholder="Fax"
+                            formControlName="fax">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <label for="about">Télephone</label>
+                        <div>
+                            <input type="text" class="form-control" name="dateDebut" placeholder="Télephone"
+                            formControlName="tel">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <label for="about">Code Postal</label>
+                        <div>
+                            <input type="text" class="form-control" name="dateDebut" placeholder="Code Postal"
+                            formControlName="codePostal">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <label for="about">Mail</label>
+                        <div>
+                            <input type="text" class="form-control" name="dateDebut" placeholder="Mail"
+                            formControlName="mail">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <label for="about">Mot de passe</label>
+                        <div>
+                            <input type="text" class="form-control" name="dateDebut" placeholder="Mot de passe"
+                            formControlName="mdp">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button"
+                        (click)="Update()">Mise à jour le profil</button></div>
+                        <br>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert"
+                    style="width:40rem; margin-left: auto; margin-right: auto;" *ngIf="updated">
+                    <strong>HEY!</strong> Votre profil est mise à jour avec succés.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="alert alert-warning alert-dismissible fade show" role="alert"
+                    style="width:40rem; margin-left: auto; margin-right: auto;" *ngIf="NotUpdated">
+                    <strong>SVP!</strong> Veuillez vérifier les champs.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

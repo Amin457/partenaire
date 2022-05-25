@@ -5,6 +5,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Feedback } from '../models/feedback-model';
 import { FeedbackService } from '../services/feedback.service';
+import { Partenaire } from '../models/partenaire_model';
+import jwt_decode  from 'jwt-decode';
 
 
 @Component({
@@ -14,10 +16,13 @@ import { FeedbackService } from '../services/feedback.service';
 })
 export class FeedbackComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit', 'Q4', 'Q5', '6'];
+  displayedColumns: string[] = ['Nom', 'Prénom', 'Question', 'Réponse'];
   dataSource!: MatTableDataSource<Feedback>;
   idpart!:number;
   dataTable: Feedback[]=[];
+  partenaire!:Partenaire
+  token !: any
+  decoded: any;
   
   @ViewChild(MatPaginator)paginator!: MatPaginator;
   @ViewChild(MatSort)sort!: MatSort;
@@ -42,10 +47,13 @@ export class FeedbackComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.token=localStorage.getItem('token');
+    this.decoded = jwt_decode(this.token);
+    this.partenaire=this.decoded.result;
+    console.log(this.partenaire);
+
     this.dataSource = new MatTableDataSource();
-    this.idpart=this.root.snapshot.params['id'];
-    console.log(this.idpart);
-    this.service.Getfeedback().subscribe(res => { console.log('res',res.data);
+    this.service.Getfeedback(this.partenaire.id_part).subscribe(res => { console.log('res',res.data);
       this.dataSource.data = res.data } )
     console.log('datasource',this.dataSource);
     

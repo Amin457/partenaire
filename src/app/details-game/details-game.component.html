@@ -10,18 +10,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <h2 class="titre">Tombola Roue</h2>
-<h4 class="etat">Etat: Activée</h4>
+<h4 class="etat">Etat:{{etat}}</h4>
 
 
 <div class="d-flex justify-content-sm-center">
 
-    <button type="button" class="btn btn-outline-danger"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+    <button (click)="updateEtat()" *ngIf="etat=='Activé'" type="button" class="btn btn-outline-danger"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
             fill="currentColor" class="bi bi-bell-slash" viewBox="0 0 16 16">
             <path
                 d="M5.164 14H15c-.299-.199-.557-.553-.78-1-.9-1.8-1.22-5.12-1.22-6 0-.264-.02-.523-.06-.776l-.938.938c.02.708.157 2.154.457 3.58.161.767.377 1.566.663 2.258H6.164l-1 1zm5.581-9.91a3.986 3.986 0 0 0-1.948-1.01L8 2.917l-.797.161A4.002 4.002 0 0 0 4 7c0 .628-.134 2.197-.459 3.742-.05.238-.105.479-.166.718l-1.653 1.653c.02-.037.04-.074.059-.113C2.679 11.2 3 7.88 3 7c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0c.942.19 1.788.645 2.457 1.284l-.707.707zM10 15a2 2 0 1 1-4 0h4zm-9.375.625a.53.53 0 0 0 .75.75l14.75-14.75a.53.53 0 0 0-.75-.75L.625 15.625z" />
         </svg> Désactiver ce jeu</button>
 
-    <button type="button" class="btn btn-outline-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+    <button (click)="updateEtat()"  *ngIf="etat=='désactivé'" type="button" class="btn btn-outline-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
             fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
             <path
                 d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
@@ -53,31 +53,36 @@
                 </tr>
             </thead>
             <tbody>
-                
+
                 <tr *ngFor="let cadeau of cadeaux">
                     <td>{{cadeau.id_cadeau}}</td>
                     <td>{{cadeau.description}}</td>
                     <td>{{cadeau.quantity}}</td>
                     <td>
                         <a class="add" title="Ajouter" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                        <a class="edit" title="Modifer" data-toggle="tooltip" (click)="update()"><i class="material-icons">&#xE254;</i></a>
-                        <a class="delete" title="Supprimer" data-toggle="tooltip" (click)="deleteCadeau(cadeau.id_cadeau)"><i
-                                class="material-icons">&#xE872;</i></a>
+                        <a class="edit" title="Modifer" data-toggle="tooltip" (click)="update()"><i
+                                class="material-icons">&#xE254;</i></a>
+                        <a class="delete" title="Supprimer" data-toggle="tooltip"
+                            (click)="deleteCadeau(cadeau.id_cadeau)"><i class="material-icons">&#xE872;</i></a>
                     </td>
                 </tr>
                 <tr *ngIf="updated">
                     <td><input type="text" class="form-control" name="name" id="name"></td>
                     <td><input type="text" class="form-control" name="department" id="department"></td>
                     <td><input type="text" class="form-control" name="phone" id="phone"></td>
-                    <td><button type="button" class="btn btn-success add-new"><i class="fa fa-plus"></i> update </button>
+                    <td><button type="button" class="btn btn-success add-new"><i class="fa fa-plus"></i> update
+                        </button>
                     </td>
                 </tr>
-                
+
                 <tr *ngIf="clicked">
-                    <td><input type="text" class="form-control" placeholder="à ne pas remplir" [(ngModel)]="id_cadeau" ></td>
-                    <td><input type="text" class="form-control" placeholder="Description" [(ngModel)]="description" ></td>
-                    <td><input type="text" class="form-control" placeholder="Quantité" [(ngModel)]="quantity" ></td>
-                    <td><button type="button" class="btn btn-success add-new" (click)="addCadeau()"><i class="fa fa-plus"></i> Add </button>
+                    <td><input type="text" class="form-control" placeholder="à ne pas remplir" [(ngModel)]="id_cadeau">
+                    </td>
+                    <td><input type="text" class="form-control" placeholder="Description" [(ngModel)]="description">
+                    </td>
+                    <td><input type="text" class="form-control" placeholder="Quantité" [(ngModel)]="quantity"></td>
+                    <td><button type="button" class="btn btn-success add-new" (click)="addCadeau()"><i
+                                class="fa fa-plus"></i> Add </button>
                     </td>
                 </tr>
             </tbody>
@@ -96,35 +101,25 @@
             <thead>
                 <tr>
                     <th scope="col">Nom</th>
+                    <th scope="col">Prenom</th>
                     <th scope="col">Mail</th>
                     <th scope="col">Date</th>
                     <th scope="col">Cadeau</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Omar</th>
-                    <td>omar@yahoo.fr</td>
-                    <td>2022/01/29</td>
-                    <td>100Points</td>
-                </tr>
-                <tr>
-                    <th scope="row">Rabeb</th>
-                    <td>rabeb@gmail.com</td>
-                    <td>2022/01/21</td>
-                    <td>200dt</td>
-                </tr>
-                <tr>
-                    <th scope="row">Ameni</th>
-                    <td>ameni@gmail.com</td>
-                    <td>2022/02/5</td>
-                    <td>500dt</td>
+                <tr *ngFor="let item of gagnants">
+                    <th scope="row">{{item.Nom}}</th>
+                    <td>{{item.Prenom}}</td>
+                    <td>{{item.mail}}</td>
+                    <td>{{item.date}}</td>
+                    <td>{{item.description}}</td>
                 </tr>
             </tbody>
         </table>
-        
+
     </div>
-    
+
 </div>
 
 <br>

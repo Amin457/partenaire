@@ -27,6 +27,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { GererFeedbacksComponent } from './gerer-feedbacks/gerer-feedbacks.component';
+import { RepportFeedComponent } from './repport-feed/repport-feed.component';
+import { ProfilComponent } from './profil/profil.component';
+import { ChartfeedComponent } from './chartfeed/chartfeed.component';
 
 
 
@@ -52,6 +56,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     DetailsGameComponent,
     DashboardComponent,
     NavbarComponent,
+    GererFeedbacksComponent,
+    RepportFeedComponent,
+    ProfilComponent,
+    ChartfeedComponent,
     
     
     

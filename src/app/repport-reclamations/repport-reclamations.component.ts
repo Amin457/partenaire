@@ -5,6 +5,8 @@ import { Statrec } from '../models/stat-rec-model';
 import { Datestat } from '../models/date-model';
 import { StatRecService } from '../services/stat-rec.service';
 import { BarChart } from '../models/bar-chart-model';
+import { PieChart } from '../models/pie_chart-model';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -16,10 +18,14 @@ import { BarChart } from '../models/bar-chart-model';
 export class RepportReclamationsComponent implements OnInit {
 
   //declaration reclamations par accueil
-  dateDebut!: string;
-  dateFin!: string;
+  dateDebut1!: string;
+  dateFin1!: string;
   id_part = 4;
   accueil!: number;
+  dateDebut!: any;
+  dateFin!: any;
+
+  
 
   //declaration reclamations par prix
   prix!: number;
@@ -32,11 +38,13 @@ export class RepportReclamationsComponent implements OnInit {
 
   bar!: BarChart[];
 
+  pie!: PieChart[];
+
   obj: Datestat = new Datestat();
 
   show = false;
 
-  // Pie-chart
+  // Pie-chart 1
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -51,6 +59,18 @@ export class RepportReclamationsComponent implements OnInit {
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
+
+  //Pie-chart 2
+
+  public pieChartOptions2: ChartOptions = {
+    responsive: true,
+  };
+  public pieChartLabels2: Label[] = [];
+
+  public pieChartData2: SingleDataSet = [];
+  public pieChartType2: ChartType = 'pie';
+  public pieChartLegend2 = true;
+  public pieChartPlugins2 = [];
 
   //bar-chart
   public barChartOptions: ChartOptions = {
@@ -76,8 +96,11 @@ export class RepportReclamationsComponent implements OnInit {
   async onGenerate() {
 
     this.obj.id_part = this.id_part;
+    this.dateDebut = new DatePipe('en-US').transform(this.dateDebut1, 'yyyy-MM-dd');
+    this.dateFin = new DatePipe('en-US').transform(this.dateFin1, 'yyyy-MM-dd')
     this.obj.dateDebut = this.dateDebut;
     this.obj.dateFin = this.dateFin;
+    console.log(this.dateDebut);
 
     //reclamations par accueil
 
@@ -104,24 +127,37 @@ export class RepportReclamationsComponent implements OnInit {
             this.personnel = res.data[0].rec_accueil;
             console.log(this.personnel);
 
-            //reclamtion par mois
-            this.service.GetRecMois(this.obj).subscribe(res => {
-              console.log('resMois', res);
-              this.bar = res.data;
-              console.log('barchat', this.bar);
-
-              for (var index in this.bar) {
-                console.log(this.bar[index].month); 
-                this.barChartLabels[index]=this.bar[index].month;
+            //reclamation par boutique
+            this.service.GetRecBoutique(this.obj).subscribe(res => {
+              console.log('boutique',res);
+              this.pie=res.data;
+              for (var index in this.pie) {
+                this.pieChartLabels2[index] = this.pie[index].boutique;
+                this.pieChartData2[index]=this.pie[index].rec_boutique;
               }
 
-              this.pieChartData = [this.accueil, this.prix, this.qualite, this.personnel];
-              
-              this.barChartData = [
-                { data: [this.bar[0].nbrTotal, this.bar[1].nbrTotal, this.bar[2].nbrTotal], label: 'Series A' }
-              ];
-              this.show = true;
+              //reclamtion par mois
+              this.service.GetRecMois(this.obj).subscribe(res => {
+                console.log('resMois', res);
+                this.bar = res.data;
+                console.log('barchat', this.bar);
+
+                
+                for (var index in this.bar) {
+                  console.log(this.bar[index].month);
+                  this.barChartLabels[index] = this.bar[index].month;
+                }
+
+                this.pieChartData = [this.accueil, this.prix, this.qualite, this.personnel];
+
+               this.barChartData = [
+                  { data: [this.bar[0].nbrTotal], label: 'Series A' }
+                ];
+                this.show = true;
+              })
             })
+
+
           })
         })
       })

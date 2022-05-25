@@ -11,4 +11,10 @@ table {
     width: 25%;
   }
   
+  .titre {
+    font: Regular 400;
+    text-align: center;
+    font-size: 45px;
+    color: #0570db;
+  }
   
