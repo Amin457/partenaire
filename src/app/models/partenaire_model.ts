@@ -1,6 +1,4 @@
-export class Partenaire {
-    
-
+export class Partenaire {   
     id_part !: number;
     societe !: string;
     img!:string;

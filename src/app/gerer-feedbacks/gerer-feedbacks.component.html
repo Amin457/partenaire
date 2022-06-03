@@ -1,13 +1,4 @@
 <h2 class="titre">Gérer votre enquête de satisfaction !</h2>
-<!--
-<div class="alert alert-warning alert-dismissible fade show" role="alert"
-    style="width:40rem; margin-left: auto; margin-right: auto;" *ngIf="alert_reponse">
-    <strong>SVP!</strong> Veuillez saisir au moins une réponse.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
--->
 <div class="row">
 
     <div class="col-lg-6" style="margin-left: auto; margin-right: auto;">
@@ -19,11 +10,11 @@
 
                 <!--Question-->
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Question" aria-label="Recipient's username"
+                    <input type="text" class="form-control" disabled="{{valide}}" placeholder="Question" aria-label="Recipient's username"
                         aria-describedby="basic-addon2" [(ngModel)]="question">
 
                 </div>
-                <ul class="list-group list-group-flush">
+                <ul *ngIf="valide" class="list-group list-group-flush">
                     <li class="list-group-item" *ngFor="let item of reponse_ajoute">{{item.reponse}}</li>
                 </ul>
                 <!--Réponse-->
@@ -36,12 +27,10 @@
 
                     <input type="text" class="form-control" aria-label="Text input with radio button"
                         placeholder="réponse" [(ngModel)]="reponse" list="cars">
-                    <!-- <datalist id="cars">
-                        <option>Oui</option>
-                        <option>Non</option>
-                        <option>Mercedes</option>
-                        <option>Audi</option>
-                      </datalist>-->
+                     <datalist id="cars">
+                        <option *ngFor="let i of Get_reponse">{{i.reponse}}</option>
+
+                      </datalist>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" (click)="addResponse()">Ajouter</button>
                     </div>
@@ -69,7 +58,7 @@
                 </li>
             </span>
         </ul>
-        <a href="#" class="card-link">Supprimer question</a>
+        <button class="card-link" (click)="deleteQuestion(item.id_question)">Supprimer</button>
     </div>
 
 </div>

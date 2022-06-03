@@ -1,5 +1,37 @@
-<div class="chart-area">
-    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-      [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend" >
-    </canvas>
+<!--<div class="chart-wrapper">
+  <canvas baseChart 
+  [data]="doughnutChartData"
+  [labels]="doughnutChartLabels"
+  [chartType]="doughnutChartType">
+</canvas>
+</div>-->
+<!--<div class="chartjs-block">
+  <canvas baseChart 
+      [datasets]="lineChartData" 
+      [labels]="lineChartLabels" 
+      [options]="lineChartOptions"
+      [colors]="lineChartColors" 
+      [legend]="lineChartLegend" 
+      [chartType]="'line'" 
+      [plugins]="lineChartPlugins">
+  </canvas>
+</div>-->
+<div class="chart-wrapper">
+  <canvas baseChart 
+  [datasets]="barChartData"
+  [labels]="barChartLabels"
+  [options]="barChartOptions"
+  [plugins]="barChartPlugins"
+  [legend]="barChartLegend"
+  [chartType]="barChartType">
+</canvas>
 </div>
+<!--
+<div class="chart-wrapper">
+  <canvas baseChart
+  [datasets]="radarChartData"
+  [options]="radarChartOptions"
+  [labels]="radarChartLabels"
+  [chartType]="radarChartType">
+</canvas>
+</div>-->

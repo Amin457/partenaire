@@ -109,7 +109,7 @@
       <!-- Pie Chart -->
       <div class="card shadow mb-4" *ngIf="show">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+          <h6 class="m-0 font-weight-bold text-primary">nombre de recalmations par catégorie</h6>
         </div>
         <div class="card-body">
           <div class="chart-area">
@@ -131,7 +131,7 @@
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Pie Chart</h6>
+          <h6 class="m-0 font-weight-bold text-primary">nombre de recalmations par boutique</h6>
         </div>
         <!-- Card Body -->
         <div class="card-body">
@@ -150,14 +150,21 @@
     <!-- Bar Chart -->
     <div class="card shadow mb-4" *ngIf="show">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+        <h6 class="m-0 font-weight-bold text-primary">nombre de recalmations par mois</h6>
       </div>
       <div class="card-body">
-        <div class="chart-bar">
-          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-            [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+        <div style="display: flex;
+        justify-content: center;" class="chartjs-block">
+          <canvas height="600" width="1100" baseChart 
+              [datasets]="lineChartData" 
+              [labels]="lineChartLabels" 
+              [options]="lineChartOptions"
+              [colors]="lineChartColors" 
+              [legend]="lineChartLegend" 
+              [chartType]="'line'" 
+              [plugins]="lineChartPlugins">
           </canvas>
-        </div>
+      </div>
         <hr>
 
       </div>

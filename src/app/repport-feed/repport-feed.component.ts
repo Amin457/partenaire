@@ -6,6 +6,7 @@ import { StatFeed, StatFeedQuestion, StatFeedReponse } from '../models/stat-feed
 import { Partenaire } from '../models/partenaire_model';
 import jwt_decode  from 'jwt-decode';
 import { FeedbackService } from '../services/feedback.service';
+import { Feedback } from '../models/feedback-model';
 
 @Component({
   selector: 'app-repport-feed',
@@ -14,8 +15,9 @@ import { FeedbackService } from '../services/feedback.service';
 })
 export class RepportFeedComponent implements OnInit {
 
-  dateDebut1!: string;
-  dateFin1!: string;
+  myDate = new Date();
+  dateDebut1: any=this.date();
+  dateFin1: any= new DatePipe('en-US').transform(this.myDate, 'yyyy-MM-dd');
 
   dateDebut!: any;
   dateFin!: any;
@@ -29,6 +31,8 @@ export class RepportFeedComponent implements OnInit {
   token !: any
   decoded: any;
 
+  idpart!:number;
+  feedback: Feedback[]=[];
   
 
  
@@ -39,10 +43,11 @@ export class RepportFeedComponent implements OnInit {
   ngOnInit(): void {
     this.token=localStorage.getItem('token');
   this.decoded = jwt_decode(this.token);
-  this.partenaire=this.decoded.result;
-  console.log(this.partenaire);
-   
-    
+  this.partenaire=this.decoded.result;  
+  this.service.Getfeedback(this.partenaire.id_part).subscribe(res => { console.log('res',res.data);
+    this.feedback = res.data } ) 
+
+    this.onGenerate();   
   }
 
   onGenerate(){
@@ -51,18 +56,12 @@ export class RepportFeedComponent implements OnInit {
     this.obj.dateDebut = this.dateDebut;
     this.obj.dateFin = this.dateFin;
     this.obj.id_part= this.partenaire.id_part;
-
-    console.log(this.obj);
+    console.log("datteeetetet",this.obj);
     this.service.StatFeedQuestion(this.obj).subscribe(res=>{
       this.question=res.question;
       console.log(res)
       this.reponse=res.reponse;
-      
-  
-      
-    
-      
-      }
+    }
       );
 
 
@@ -70,5 +69,10 @@ export class RepportFeedComponent implements OnInit {
 
 
   }
-
+  date() {
+    let date: Date = new Date();
+    date.setDate(date.getDate() -730);
+    let datePipe: DatePipe = new DatePipe('en-US');
+    return datePipe.transform(date, 'yyyy-MM-dd');
+  }
 }

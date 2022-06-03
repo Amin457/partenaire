@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions, ChartDataSets } from 'chart.js';
-import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, } from 'ng2-charts';
+import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, Color, } from 'ng2-charts';
 import { Statrec } from '../models/stat-rec-model';
 import { Datestat } from '../models/date-model';
 import { StatRecService } from '../services/stat-rec.service';
@@ -18,8 +18,9 @@ import { DatePipe } from '@angular/common';
 export class RepportReclamationsComponent implements OnInit {
 
   //declaration reclamations par accueil
-  dateDebut1!: string;
-  dateFin1!: string;
+  myDate = new Date();
+  dateDebut1: any=this.date();
+  dateFin1: any= new DatePipe('en-US').transform(this.myDate, 'yyyy-MM-dd');
   id_part = 4;
   accueil!: number;
   dateDebut!: any;
@@ -48,12 +49,7 @@ export class RepportReclamationsComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
-  public pieChartLabels: Label[] = [
-    ['Accueil'],
-    ['Prix'],
-    ['Qualité'],
-    'Personnel',
-  ];
+  public pieChartLabels: Label[] = ['Accueil','Prix','Qualité','Personnel'];
 
   public pieChartData: SingleDataSet = [];
   public pieChartType: ChartType = 'pie';
@@ -73,16 +69,27 @@ export class RepportReclamationsComponent implements OnInit {
   public pieChartPlugins2 = [];
 
   //bar-chart
-  public barChartOptions: ChartOptions = {
-    responsive: true,
+ 
+  lineChartData: ChartDataSets[] = [
+    { data: [], label: 'statistiques des reclamation' },
+  ];
+
+  lineChartLabels: Label[] = [];
+
+  lineChartOptions = {
+    responsive: false,
   };
-  public barChartLabels: Label[] = [];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
-  public barChartPlugins = [];
 
-  public barChartData: ChartDataSets[] = [];
+  lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,255,0,0.28)',
+    },
+  ];
 
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
   constructor(private service: StatRecService) {
 
     monkeyPatchChartJsTooltip();
@@ -90,16 +97,21 @@ export class RepportReclamationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.onGenerate();
   }
 
   async onGenerate() {
+    this.pieChartData2=[];
+    this.pieChartLabels2=[];
+    this.pieChartData=[];
 
+    this.lineChartLabels=[];
+    this.lineChartData[0].data=[];
     this.obj.id_part = this.id_part;
     this.dateDebut = new DatePipe('en-US').transform(this.dateDebut1, 'yyyy-MM-dd');
-    this.dateFin = new DatePipe('en-US').transform(this.dateFin1, 'yyyy-MM-dd')
-    this.obj.dateDebut = this.dateDebut;
-    this.obj.dateFin = this.dateFin;
+    this.dateFin = new DatePipe('en-US').transform(this.dateFin1, 'yyyy-MM-dd');
+    this.obj.dateDebut=this.dateDebut;
+    this.obj.dateFin=this.dateFin;
     console.log(this.dateDebut);
 
     //reclamations par accueil
@@ -144,15 +156,14 @@ export class RepportReclamationsComponent implements OnInit {
 
                 
                 for (var index in this.bar) {
-                  console.log(this.bar[index].month);
-                  this.barChartLabels[index] = this.bar[index].month;
+                 this.lineChartLabels.push(this.bar[index].month);
+                 this.lineChartData[0].data?.push(this.bar[index].nbrTotal);      
+                 
                 }
-
+                
                 this.pieChartData = [this.accueil, this.prix, this.qualite, this.personnel];
 
-               this.barChartData = [
-                  { data: [this.bar[0].nbrTotal], label: 'Series A' }
-                ];
+              
                 this.show = true;
               })
             })
@@ -166,6 +177,13 @@ export class RepportReclamationsComponent implements OnInit {
 
 
 
+  }
+
+  date() {
+    let date: Date = new Date();
+    date.setDate(date.getDate() -730);
+    let datePipe: DatePipe = new DatePipe('en-US');
+    return datePipe.transform(date, 'yyyy-MM-dd');
   }
 
 }

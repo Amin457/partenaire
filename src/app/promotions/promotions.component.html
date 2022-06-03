@@ -1,84 +1,143 @@
 <!--Page promotion-->
+
 <head>
-    <meta charset="utf-8">
-    <title>EShopper - Bootstrap Shop Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+  <meta charset="utf-8">
+  <title>EShopper - Bootstrap Shop Template</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="Free HTML Templates" name="keywords">
+  <meta content="Free HTML Templates" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
 </head>
 
-<div >
-<!-- list promotion Start -->
-<div class="col-lg-9 col-md-12" style="margin-left: auto; margin-right: auto;">
+<div>
+  <div class="col-lg-9 col-md-12" style="margin-left: auto; margin-right: auto;">
     <div class="row pb-3">
-        <div class="col-12 pb-1">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search by name">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-                <button type="button" class="btn btn-outline-primary" [routerLink]="['addpromo']"> Ajouter une promotion</button>
+      <div class="col-12 pb-1">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <form action="">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search by name">
+              <div class="input-group-append">
+                <span class="input-group-text bg-transparent text-primary">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
             </div>
+          </form>
+          <button type="button" class="btn btn-outline-primary" [routerLink]="['addpromo']"> Ajouter une
+            promotion</button>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 pb-1" *ngFor="let p of promotions">
-            <div class="card product-item border-0 mb-4">
-                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                    <img class="img-fluid w-100" src="{{ApiImg+p.image}}" alt="">
-                </div>
-                <!--
-                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                    <h6 class="text-truncate mb-3">{{p.nom}}</h6>
-                </div>
-                -->
-                <div class="card-footer d-flex justify-content-between bg-light border">
-                    <div class="d-grid gap-2 col-12 mx-auto">
-                        <button type="button" class="btn btn-primary">Supprimer</button>
-                      </div>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-12 pb-1">
-            <nav aria-label="Page navigation">
-              <ul class="pagination justify-content-center mb-3">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-        </div>
-    </div>
-</div>
-<!-- Shop Product End -->
+      </div>
 
-</div>
+     
+
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+        integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6 col-lg-4" *ngFor="let p of promotions">
+              <div class="team-style1 hoverstyle1">
+                <div class="team-img">
+                  <img src="{{ApiImg+p.image}}" alt="">
+                </div>
+                <div class="team-social-icon">
+                  <ul>
+                    <li><a (click)="deletepromo(p.id_promo)"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                          height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                          <path
+                            d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                        </svg></a></li>
+                    <li><a (click)="open(p.id_promo)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                          fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path
+                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                          <path fill-rule="evenodd"
+                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="team-info" style=" position: absolute;
+                bottom: 0;
+                padding: 20px;
+                background: #00baee;
+                text-align: center;">
+                <h3 class="h5">{{p.nom}}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--//////////////////////////////////-->
+      <div class="modal fade my-modal" tabindex="-1" role="dialog" #Edit>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="col-md-12">
+                <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
+
+                  <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label">Nom de la promotion</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="name" [(ngModel)]="name" placeholder="Nom">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="about" class="col-sm-3 control-label">url</label>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" placeholder="URL" [(ngModel)]="url" name="description"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="about" class="col-sm-3 control-label">Date début :</label>
+                    <div class="col-sm-9">
+                      <input type="date" class="form-control" name="dateDebut" [(ngModel)]="dateDebut1"
+                        placeholder="date de début">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="about" class="col-sm-3 control-label">Date Fin :</label>
+                    <div class="col-sm-9">
+                      <input type="date" class="form-control" name="dateFin" [(ngModel)]="dateFin1"
+                        placeholder="date de Fin">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label">Affiche de promotion</label>
+                    <div class="col-sm-3">
+                      <input type="file" name="file" (change)="onFileSelected($event)">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9" class="d-flex justify-content-center">
+                      <button type="submit" class="btn btn-primary" (click)="onUpload()">mise a jour</button>
+                    </div>
+                  </div>
+                </form>
+                <button type="button" class="btn btn-secondary" (click)="close()">Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

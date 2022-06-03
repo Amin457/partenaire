@@ -46,7 +46,6 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Id cadeau</th>
                     <th>Description</th>
                     <th>Quantité</th>
                     <th>Actions</th>
@@ -55,29 +54,15 @@
             <tbody>
 
                 <tr *ngFor="let cadeau of cadeaux">
-                    <td>{{cadeau.id_cadeau}}</td>
                     <td>{{cadeau.description}}</td>
                     <td>{{cadeau.quantity}}</td>
-                    <td>
+                    <td style="text-align:center;">
                         <a class="add" title="Ajouter" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                        <a class="edit" title="Modifer" data-toggle="tooltip" (click)="update()"><i
-                                class="material-icons">&#xE254;</i></a>
                         <a class="delete" title="Supprimer" data-toggle="tooltip"
                             (click)="deleteCadeau(cadeau.id_cadeau)"><i class="material-icons">&#xE872;</i></a>
                     </td>
                 </tr>
-                <tr *ngIf="updated">
-                    <td><input type="text" class="form-control" name="name" id="name"></td>
-                    <td><input type="text" class="form-control" name="department" id="department"></td>
-                    <td><input type="text" class="form-control" name="phone" id="phone"></td>
-                    <td><button type="button" class="btn btn-success add-new"><i class="fa fa-plus"></i> update
-                        </button>
-                    </td>
-                </tr>
-
                 <tr *ngIf="clicked">
-                    <td><input type="text" class="form-control" placeholder="à ne pas remplir" [(ngModel)]="id_cadeau">
-                    </td>
                     <td><input type="text" class="form-control" placeholder="Description" [(ngModel)]="description">
                     </td>
                     <td><input type="text" class="form-control" placeholder="Quantité" [(ngModel)]="quantity"></td>
@@ -112,7 +97,7 @@
                     <th scope="row">{{item.Nom}}</th>
                     <td>{{item.Prenom}}</td>
                     <td>{{item.mail}}</td>
-                    <td>{{item.date}}</td>
+                    <td>{{item.date.toString().substr(0,10)}}</td>
                     <td>{{item.description}}</td>
                 </tr>
             </tbody>

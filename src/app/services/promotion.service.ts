@@ -20,8 +20,17 @@ export class PromotionService {
     return this.http.post<Promo>(this._url, p);
   }
 
-  Getall(id_part: number){
+  Getall(id_part: number):Observable<any> {
     return this.http.get<any>(this._url1+id_part);
   }
 
+  deltepromo(id_promo: number):Observable<any>{
+    return this.http.delete<any>(this._url1+id_promo);
+  }
+  getPromoById(id_promo: number):Observable<any> {
+    return this.http.get<any>(this._url1+'getPromoById/'+id_promo);
+  }
+  updatePromo(obj : Promo):Observable<Promo> {
+    return this.http.patch<Promo>(this._url1+'updatePromo',obj);
+  }
 }

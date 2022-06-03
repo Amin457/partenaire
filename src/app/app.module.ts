@@ -14,14 +14,12 @@ import { AddpromoComponent } from './promotions/addpromo/addpromo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ConfigComponent } from './config/config.component';
 import { FeedbacktableComponent } from './feedbacktable/feedbacktable.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HomeAllComponent } from './home-all/home-all.component';
 import { RepportReclamationsComponent } from './repport-reclamations/repport-reclamations.component';
-import { ChartsModule } from 'ng2-charts';
 import { DetailsGameComponent } from './details-game/details-game.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +29,8 @@ import { GererFeedbacksComponent } from './gerer-feedbacks/gerer-feedbacks.compo
 import { RepportFeedComponent } from './repport-feed/repport-feed.component';
 import { ProfilComponent } from './profil/profil.component';
 import { ChartfeedComponent } from './chartfeed/chartfeed.component';
+import { ChartsModule } from 'ng2-charts';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -46,7 +46,6 @@ import { ChartfeedComponent } from './chartfeed/chartfeed.component';
     ReclamationComponent,
     FeedbackComponent,
     AddpromoComponent,
-    ConfigComponent,
     FeedbacktableComponent,
     LoginComponent,
     HeaderComponent,
@@ -75,14 +74,10 @@ import { ChartfeedComponent } from './chartfeed/chartfeed.component';
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
-    ChartsModule,
     MatDialogModule,
-    MatButtonModule
-   
-    
-
-
-  ],
+    MatButtonModule,
+    ChartsModule,
+    ToastrModule.forRoot()],
   providers: [],
   bootstrap: [AppComponent]
 })

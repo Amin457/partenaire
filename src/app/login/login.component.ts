@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         return false;
       }else{
         localStorage.setItem('token',res.token);
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['dashboard/home']);
         return false;
       }
       },

@@ -8,7 +8,7 @@ import { FilesService } from 'src/app/services/files.service';
 import { PromotionService } from 'src/app/services/promotion.service';
 import jwt_decode  from 'jwt-decode';
 import { DatePipe } from '@angular/common';
-
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -20,12 +20,12 @@ export class AddpromoComponent implements OnInit {
 
   selectedFile:any;
   name!: string;
-  description!: string;
+  url!: string;
   dateDebut1!:string;
   dateFin1!:string;
   dateDebut!: any;
   dateFin!: any;
-  obj:Promo=new Promo();
+  promo:Promo=new Promo();
   partenaire!:Partenaire;
   token !: any;
   decoded: any;
@@ -48,24 +48,44 @@ export class AddpromoComponent implements OnInit {
   onUpload(){
     this.dateDebut = new DatePipe('en-US').transform(this.dateDebut1, 'yyyy-MM-dd');
     this.dateFin = new DatePipe('en-US').transform(this.dateFin1, 'yyyy-MM-dd');
-    const promo= new Promo();
     const formData = new FormData();
     formData.append('file',this.selectedFile);
-    this.fileservice.postFile(formData).subscribe(data=>{
-      console.log(data,'image');
-    promo.nom=this.name;
-    promo.description=this.description;
-    promo.image=data.imgUrl;
-    promo.id_part=this.partenaire.id_part;
-    console.log(this.partenaire.id_part,'tokkkeeen');
 
-    promo.dateDebut=this.dateDebut;
+    if(this.selectedFile==undefined||this.name==undefined||this.url==undefined||this.dateDebut==undefined||this.dateFin==undefined)
+    {
+      Swal.fire({
+        title: 'Error!',
+        text: 'vérfier les champs',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
+    }else{
+
+        this.fileservice.postFile(formData).subscribe(res=>{
+        this.promo.image=res.data;
+        this.promo.nom=this.name;
+        this.promo.url=this.url;
+       
+        this.promo.id_part=this.partenaire.id_part;
     
-    promo.dateFin=this.dateFin;
-    this.service.Ajouter(promo).subscribe(data=>{
-      console.log('it works',data);
-    })
-    })
+        this.promo.dateDebut=this.dateDebut;
+        
+        this.promo.dateFin=this.dateFin;
+        console.log(this.promo,'tokkkeeen');
+
+        this.service.Ajouter(this.promo).subscribe(data=>{
+          console.log('it works',data);
+          Swal.fire({
+            title: 'success',
+            text: 'promotion ajouté avec succée',
+            icon: 'success',
+            confirmButtonText: 'ok'
+          })
+        })
+      
+        })
+    }
+   
     
 
   }

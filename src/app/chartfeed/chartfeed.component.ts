@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
 import { StatFeedRep, StatFeedReponse } from '../models/stat-feed-model';
 import { FeedbackService } from '../services/feedback.service';
+import { ChartDataSets, ChartOptions, ChartType, RadialChartOptions } from 'chart.js';
+import { Color, Label,MultiDataSet} from 'ng2-charts';
 
 @Component({
   selector: 'app-chartfeed',
@@ -22,37 +22,22 @@ export class ChartfeedComponent implements OnInit {
 
   reponse:StatFeedReponse[]=[];
   obj1:StatFeedRep = new StatFeedRep();
-
-  
-   // Pie
-   public pieChartOptions: ChartOptions ={
+  barChartOptions: ChartOptions = {
     responsive: true,
-  
-  }
-  public pieChartLabels: Label[] = [];
-  public pieChartData: SingleDataSet = [];
-  public pieChartType: ChartType = 'pie';
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
-  public color = ["blue"];
-  
-  /*
-
-  public barChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  public barChartLabels: Label[] = [];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
-  public barChartPlugins = [];
-
-  public barChartData: ChartDataSets[] = [
     
-  ];*/
+  };
+  barChartLabels: Label[] = [];
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartPlugins = [];
 
+  barChartData: ChartDataSets[] = [
+    { data: [], label: 'nombre de reponse' }
+  ];
+
+  public radarChartType: ChartType = 'radar';
   constructor(private service:FeedbackService) {
-    monkeyPatchChartJsTooltip();
-    monkeyPatchChartJsLegend();
+   
    }
 
   ngOnInit(): void {
@@ -66,12 +51,10 @@ export class ChartfeedComponent implements OnInit {
 
       
       for (var index in this.reponse) {
-        /*const x = { data: [this.reponse[index].nbr], label: this.reponse[index].reponse }
-        this.barChartData.push(x);*/
+    
+       this.barChartLabels[index] = this.reponse[index].reponse;
+        this.barChartData[0].data?.push(this.reponse[index].nbr);
 
-        this.pieChartLabels.push([this.reponse[index].reponse,]);
-        this.pieChartData.push(this.reponse[index].nbr)
-        
       }
 
       

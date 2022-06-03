@@ -6,6 +6,9 @@ import { StatRecService } from '../services/stat-rec.service';
 import { DatePipe, formatDate } from '@angular/common';
 import jwt_decode  from 'jwt-decode';
 import { Partenaire } from '../models/partenaire_model';
+import { PromotionService } from '../services/promotion.service';
+import { Promo } from '../models/promotion-model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +17,15 @@ import { Partenaire } from '../models/partenaire_model';
   providers: [DatePipe]
 })
 export class DashboardComponent implements OnInit {
+  images:string[] = [];
+  ApiImg = environment.Api + "api/files/get/"
 
+ 
+
+
+
+
+  promotions: Promo[] = [];
   accueil!:number;
   prix!:number;
   qualite!:number;
@@ -60,7 +71,7 @@ export class DashboardComponent implements OnInit {
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Feedbacks' }
   ];
 
-  constructor(private service: StatRecService) {
+  constructor(private service: StatRecService,private servicePromotion : PromotionService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -102,6 +113,17 @@ export class DashboardComponent implements OnInit {
         })
       })
     });
+
+
+
+    this.token = localStorage.getItem('token');
+    this.decoded = jwt_decode(this.token);
+    this.partenaire = this.decoded.result;
+    console.log(this.partenaire);
+
+    this.servicePromotion.Getall(this.partenaire.id_part).subscribe(res => {
+      this.promotions = res.data;
+    })
   }
 
   date() {
@@ -110,6 +132,5 @@ export class DashboardComponent implements OnInit {
     let datePipe: DatePipe = new DatePipe('en-US');
     return datePipe.transform(date, 'yyyy-MM-dd');
   }
-
 
 }

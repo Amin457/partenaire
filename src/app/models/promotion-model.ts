@@ -1,7 +1,7 @@
 export class Promo {
-
+    id_promo!:number;
     id_part!:number;
-    description!:String ;
+    url!:String ;
     nom!:String ;
     image!:any;
     dateDebut!:string;

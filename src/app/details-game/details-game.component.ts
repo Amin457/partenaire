@@ -20,7 +20,6 @@ export class DetailsGameComponent implements AfterViewInit {
 
   
   clicked=false;
-  updated=false;
   cadeaux:Cadeaux[]=[];
   gagnants:Gagnants[]=[];
   addCadeaux:Addcadeau = new Addcadeau();
@@ -52,7 +51,7 @@ export class DetailsGameComponent implements AfterViewInit {
 
     this.service.getGagnants(this.partenaire.id_part).subscribe(res=>{
       console.log(res);
-      this.gagnants=res.data;
+      this.gagnants=res.results;
       console.log('this.gagnants',this.gagnants);
     })
     
@@ -73,9 +72,7 @@ export class DetailsGameComponent implements AfterViewInit {
     this.clicked=!this.clicked;
   }
 
-  update(){
-    this.updated=!this.updated;
-  }
+ 
 
   addCadeau(){
     console.log(this.id_cadeau,this.description,this.quantity);

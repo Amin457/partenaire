@@ -14,7 +14,6 @@ import { StatFeed, StatFeedQuestion, StatFeedRep, StatFeedReponse } from '../mod
 export class FeedbackService {
 
   _url = environment.Api + 'api/feedback/';
-  _url1= environment.Api + 'api/';
   _url2= environment.Api + 'api/statFeed/'
 
   constructor(private http: HttpClient) { }
@@ -38,6 +37,10 @@ export class FeedbackService {
 
   getAllQuestion(id_part: number): Observable<any> {
     return this.http.get<Feedback>(`${this._url}` + `question/` + id_part);
+  }
+
+  deleteQuestion(id_question : number): Observable<any> {
+    return this.http.delete<any>(`${this._url}`+id_question);
   }
 
   //statistiques

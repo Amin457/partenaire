@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigComponent } from './config/config.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DetailsGameComponent } from './details-game/details-game.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedbacktableComponent } from './feedbacktable/feedbacktable.component';
+import { AuthGuard } from './gaurd/guard.guard';
 import { GererFeedbacksComponent } from './gerer-feedbacks/gerer-feedbacks.component';
 import { HomeAllComponent } from './home-all/home-all.component';
 import { JeuxComponent } from './jeux/jeux.component';
@@ -31,14 +31,13 @@ const routes: Routes = [
   { path: 'réclamations', component:ReclamationComponent},
   { path: 'feedbacks', component: FeedbackComponent },
   { path: 'promotions/addpromo', component: AddpromoComponent },
-  { path: 'config', component: ConfigComponent },
   { path: 'feedbacktable', component: FeedbacktableComponent },
   { path: 'repportRec', component: RepportReclamationsComponent },
   { path: 'jeux/details-game', component: DetailsGameComponent },
   { path: 'gererfeedbacks', component: GererFeedbacksComponent },
   { path: 'repportFeed', component: RepportFeedComponent },
   { path: 'profil', component: ProfilComponent },
-  ]
+  ],canActivate:[AuthGuard]
 },
 
   

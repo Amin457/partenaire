@@ -36,22 +36,7 @@
 </div>
 
 <br>
-<!--
-<div class="container" >
-    <div class="row">
-        <div class="col-md-4 col-xl-3" style="margin-left: auto; margin-right: auto;">
-            <div class="card bg-c-yellow order-card card shadow mb-4">
-                <div class="card-block">
-                    <h3 class="m-b-20">Le total des feedbacks</h3>
-                    <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>105</span></h2>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
-<h4 class="etat">Le total des feedbacks: 105</h4>
+<h4 class="etat">Le total des feedbacks: {{feedback.length}}</h4>
 
 <div class="row">
     <div class="col-xl-8 col-lg-7" style=" width:45rem; margin-left: auto; margin-right: auto;" *ngFor="let item of question">
