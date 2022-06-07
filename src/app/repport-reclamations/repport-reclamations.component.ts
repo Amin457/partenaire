@@ -7,6 +7,8 @@ import { StatRecService } from '../services/stat-rec.service';
 import { BarChart } from '../models/bar-chart-model';
 import { PieChart } from '../models/pie_chart-model';
 import { DatePipe } from '@angular/common';
+import { Partenaire } from '../models/partenaire_model';
+import jwt_decode  from 'jwt-decode';
 
 
 
@@ -21,7 +23,9 @@ export class RepportReclamationsComponent implements OnInit {
   myDate = new Date();
   dateDebut1: any=this.date();
   dateFin1: any= new DatePipe('en-US').transform(this.myDate, 'yyyy-MM-dd');
-  id_part = 4;
+  partenaire!:Partenaire;
+  token !: any;
+  decoded: any;
   accueil!: number;
   dateDebut!: any;
   dateFin!: any;
@@ -78,12 +82,19 @@ export class RepportReclamationsComponent implements OnInit {
 
   lineChartOptions = {
     responsive: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
   };
 
   lineChartColors: Color[] = [
     {
       borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
+      backgroundColor: 'rgba(0,0,255,0.3)',
     },
   ];
 
@@ -97,6 +108,9 @@ export class RepportReclamationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.token=localStorage.getItem('token');
+    this.decoded = jwt_decode(this.token);
+    this.partenaire=this.decoded.result;  
     this.onGenerate();
   }
 
@@ -107,7 +121,7 @@ export class RepportReclamationsComponent implements OnInit {
 
     this.lineChartLabels=[];
     this.lineChartData[0].data=[];
-    this.obj.id_part = this.id_part;
+    this.obj.id_part = this.partenaire.id_part;
     this.dateDebut = new DatePipe('en-US').transform(this.dateDebut1, 'yyyy-MM-dd');
     this.dateFin = new DatePipe('en-US').transform(this.dateFin1, 'yyyy-MM-dd');
     this.obj.dateDebut=this.dateDebut;
@@ -156,7 +170,7 @@ export class RepportReclamationsComponent implements OnInit {
 
                 
                 for (var index in this.bar) {
-                 this.lineChartLabels.push(this.bar[index].month);
+                 this.lineChartLabels.push(this.bar[index].month+" "+this.bar[index].year);
                  this.lineChartData[0].data?.push(this.bar[index].nbrTotal);      
                  
                 }

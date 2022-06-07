@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AddQuestion } from '../models/add-question-model';
 import { AddReponse } from '../models/add-reponse-model';
 import { StatFeed, StatFeedQuestion, StatFeedRep, StatFeedReponse } from '../models/stat-feed-model';
+import { Datestat } from '../models/date-model';
 
 
 @Injectable({
@@ -53,4 +54,12 @@ export class FeedbackService {
     return this.http.post<StatFeedReponse>(`${this._url2}` + `nbrRep`,obj);
   }
 
+
+  statSemaineFeed(date:Datestat):Observable<any>{
+    return this.http.post<Datestat>(`${this._url2}`+'statSemaine',date);
+  }
+
+  getNbFeedParMoix(date:Datestat):Observable<any>{
+    return this.http.post<Datestat>(`${this._url2}`+'getNbFeedParMoix',date);
+  }
 }

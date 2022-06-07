@@ -9,6 +9,8 @@ import { PromotionService } from 'src/app/services/promotion.service';
 import jwt_decode  from 'jwt-decode';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2'
+import { NotificationService } from 'src/app/services/notification.service';
+import { Notif } from 'src/app/models/notif';
 
 
 @Component({
@@ -29,7 +31,8 @@ export class AddpromoComponent implements OnInit {
   partenaire!:Partenaire;
   token !: any;
   decoded: any;
-  constructor(private service:PromotionService, private form:FormBuilder, private fileservice:FilesService) { }
+  Notif:Notif = new Notif();
+  constructor(private notificationService : NotificationService,private service:PromotionService, private form:FormBuilder, private fileservice:FilesService) { }
 
   ngOnInit(): void {
     this.token=localStorage.getItem('token');
@@ -75,6 +78,11 @@ export class AddpromoComponent implements OnInit {
 
         this.service.Ajouter(this.promo).subscribe(data=>{
           console.log('it works',data);
+          this.Notif.title="nouvelle promotion !!"
+          this.Notif.body=this.partenaire.societe + " a ajouté une nouvelle promotion de " + this.dateDebut + " a " +this.dateFin; 
+          this.notificationService.send(this.Notif).subscribe(res=>{
+          console.log(res);
+          })
           Swal.fire({
             title: 'success',
             text: 'promotion ajouté avec succée',

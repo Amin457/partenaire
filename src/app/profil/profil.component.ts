@@ -4,6 +4,7 @@ import jwt_decode  from 'jwt-decode';
 import { ProfilService } from '../services/profil.service';
 import { environment } from 'src/environments/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profil',
@@ -11,7 +12,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
-
   //formGroup
   form!: FormGroup;
 
@@ -32,8 +32,7 @@ export class ProfilComponent implements OnInit {
   ApiImg= environment.Api +"api/files/get/";
   img!:string;
 
-  updated:boolean=false;
-  NotUpdated:boolean=false;
+
   
   constructor(private service:ProfilService) {
     this.initForm();
@@ -75,8 +74,12 @@ export class ProfilComponent implements OnInit {
 
   Update(){
     if(this.form.value.mdp.length<8||this.form.value.nom.length<3||this.form.value.mail.length<5||this.form.value.codePostal.length<4||this.form.value.tel.length<8||this.form.value.fax.length<8){
-      this.NotUpdated=!this.updated;
-      this.updated=!this.updated;
+      Swal.fire({
+        title: 'Error!',
+        text: 'vérfier les champs',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
     }else{
     this.id_part=this.partenaire.id_part;
     console.log(this.partenaire.id_part);
@@ -92,16 +95,24 @@ export class ProfilComponent implements OnInit {
     this.service.UpdateProfil(this.partenaireUpdated).subscribe(res=>{
       console.log(res);
       if(res.success==1){
-        this.updated=!this.updated;
-        this.NotUpdated=!this.updated;
+          Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Votre profil est mise à jour avec succés',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
       else{
-        this.NotUpdated=!this.updated;
-      }
+        Swal.fire({
+          title: 'Error!',
+          text: 'vérfier les champs',
+          icon: 'error',
+          confirmButtonText: 'ok'
+        })      }
       
     })
   }
   }
+
   }
-
-

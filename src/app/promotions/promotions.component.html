@@ -27,7 +27,7 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
           <form action="">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search by name">
+              <input type="text" class="form-control" [(ngModel)] = "Search" name="Search" placeholder="rechercher un promotion ">
               <div class="input-group-append">
                 <span class="input-group-text bg-transparent text-primary">
                   <i class="fa fa-search"></i>
@@ -35,7 +35,7 @@
               </div>
             </div>
           </form>
-          <button type="button" class="btn btn-outline-primary" [routerLink]="['addpromo']"> Ajouter une
+          <button type="button" class="btn btn-outline-primary" (click)="open1()"> Ajouter une
             promotion</button>
         </div>
       </div>
@@ -49,10 +49,10 @@
       <section>
         <div class="container">
           <div class="row">
-            <div class="col-sm-6 col-lg-4" *ngFor="let p of promotions">
+            <div class="col-sm-6 col-lg-4"  *ngFor="let p of promotions | promo:Search">
               <div class="team-style1 hoverstyle1">
                 <div class="team-img">
-                  <img src="{{ApiImg+p.image}}" alt="">
+                  <img width="200px" height="350px" src="{{ApiImg+p.image}}" alt="">
                 </div>
                 <div class="team-social-icon">
                   <ul>
@@ -105,7 +105,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="about" class="col-sm-3 control-label">Date début :</label>
+                    <label for="about" class="col-sm-3 control-label">Date début</label>
                     <div class="col-sm-9">
                       <input type="date" class="form-control" name="dateDebut" [(ngModel)]="dateDebut1"
                         placeholder="date de début">
@@ -113,7 +113,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="about" class="col-sm-3 control-label">Date Fin :</label>
+                    <label for="about" class="col-sm-3 control-label">Date Fin</label>
                     <div class="col-sm-9">
                       <input type="date" class="form-control" name="dateFin" [(ngModel)]="dateFin1"
                         placeholder="date de Fin">
@@ -141,3 +141,18 @@
         </div>
       </div>
     </div>
+    <!--////////////////////////////////////////-->
+    <div class="modal fade my-modal" tabindex="-1" role="dialog" #add>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+   
+              <app-addpromo ></app-addpromo>
+              <button type="button" class="btn btn-secondary" (click)="close1()">Close
+              </button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

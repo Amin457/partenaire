@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { FilesService } from '../services/files.service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-promotions',
@@ -16,6 +17,9 @@ import { FilesService } from '../services/files.service';
 export class PromotionsComponent implements OnInit {
   @ViewChild('Edit', { static: false }) myModal!: ElementRef;
   elm!: HTMLElement;
+  @ViewChild('add', { static: false }) myModal1!: ElementRef;
+  elm1!: HTMLElement;
+  Search ='';
   ApiImg = environment.Api + "api/files/get/"
   promotions: Promo[] = [];
   promoUpdated: Promo = new Promo();
@@ -25,14 +29,16 @@ export class PromotionsComponent implements OnInit {
   selectedFile: any;
   name!: string;
   url!: string;
-  dateDebut1!: string;
-  dateFin1!: string;
+  dateDebut1!: any;
+  dateFin1!: any;
   dateDebut!: any;
   dateFin!: any;
   image!: string;
   constructor(private fileservice: FilesService, private service: PromotionService) { }
   ngAfterViewInit(): void {
     this.elm = this.myModal.nativeElement as HTMLElement;
+    this.elm1 = this.myModal1.nativeElement as HTMLElement;
+
   }
 
   ngOnInit(): void {
@@ -67,7 +73,7 @@ export class PromotionsComponent implements OnInit {
       confirmButtonText: 'YES !'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.service.deltepromo(id_promo).subscribe(res => {
+        this.service.deletepromo(id_promo).subscribe(res => {
 
           this.token = localStorage.getItem('token');
           this.decoded = jwt_decode(this.token);
@@ -101,15 +107,29 @@ export class PromotionsComponent implements OnInit {
       this.elm.style.width = '0';
     }, 75);
   }
+  close1(): void {
+    this.elm1.classList.remove('show');
+    setTimeout(() => {
+      this.elm1.style.width = '0';
+    }, 75);
 
+    this.token = localStorage.getItem('token');
+    this.decoded = jwt_decode(this.token);
+    this.partenaire = this.decoded.result;
+    console.log(this.partenaire);
+
+    this.service.Getall(this.partenaire.id_part).subscribe(res => {
+      this.promotions = res.data;
+    })
+  }
 
   open(id_promo: number): void {
     this.elm.classList.add('show');
     this.elm.style.width = '100vw';
     this.promoUpdated.id_promo = id_promo;
     this.service.getPromoById(id_promo).subscribe(res => {
-      this.dateDebut1 = res.data.date_debut.toString().substr(0, 10);
-      this.dateFin1 = res.data.date_fin.toString().substr(0, 10);
+      this.dateDebut1 =this.date(new Date(res.data.date_debut));
+      this.dateFin1 = this.date(new Date(res.data.date_fin));
       this.name = res.data.nom;
       this.url = res.data.url;
       this.image = res.data.image;
@@ -117,7 +137,10 @@ export class PromotionsComponent implements OnInit {
 
     })
   }
-
+  open1(): void {
+    this.elm1.classList.add('show');
+    this.elm1.style.width = '100vw';
+  }
   onUpload() {
     this.dateDebut = new DatePipe('en-US').transform(this.dateDebut1, 'yyyy-MM-dd');
     this.dateFin = new DatePipe('en-US').transform(this.dateFin1, 'yyyy-MM-dd');
@@ -178,6 +201,11 @@ export class PromotionsComponent implements OnInit {
 
       })
     }
+  }
+
+  date(date1 : Date) {
+    let datePipe: DatePipe = new DatePipe('en-US');
+    return datePipe.transform(date1,'yyyy-MM-dd');
   }
 }
 

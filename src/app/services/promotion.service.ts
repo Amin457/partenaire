@@ -24,7 +24,7 @@ export class PromotionService {
     return this.http.get<any>(this._url1+id_part);
   }
 
-  deltepromo(id_promo: number):Observable<any>{
+  deletepromo(id_promo: number):Observable<any>{
     return this.http.delete<any>(this._url1+id_promo);
   }
   getPromoById(id_promo: number):Observable<any> {

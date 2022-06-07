@@ -67,61 +67,39 @@
         </div>
     </div>
 
-    <div class="card card shadow mb-4" style="width: 70rem; margin-left: auto; margin-right: auto;">
-        <div class="card-body">
+
+    <div class="card card shadow mb-4" style="margin-left: auto; margin-right: auto; display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;">
+        <div class="card-body grid-child">
             <canvas style="width: 100px;" baseChart [datasets]="barChartData" [labels]="barChartLabels"
                 [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
                 [chartType]="barChartType" [colors]="chartColors">
             </canvas>
         </div>
-    </div>
-<!--    <div class="row" style="width: 70rem; margin-left: auto; margin-right: auto;">
-
-        <div class="row">
-
-            <div class="col-xl-8 col-lg-7">
-
-                <div class="card shadow mb-4" style="width: 40rem;">
-                    <div class="card-header py-3">
-                        <h5 class="m-0 font-weight-bold">Les promotions actuelles</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false"
-                            data-bs-interval="false">
-                            <div class="carousel-inner">
-                                <div class="carousel-item" *ngFor="let item of promotions">
-                                    <img src="{{ApiImg+item.image}}" class="d-block w-100" alt="...">
-                                </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button"
-                                data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button"
-                                data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                        <hr>
-                        Vous trouvez içi tous les promotions disponibles en ce moments sur l'application DigiCard pour votre clientèle
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-4 col-lg-5">
-                <div class="card shadow mb-4" style="width: 22rem;">
-                    <img class="card-img-top" src="../../assets/undraw_report_re_f5n5.svg" alt="">
-                <div class="card-body">
-                    <p class="card-text">Pour trouvez plus des statiques sur les réclamations ou les feedbacks vous pouvez accéder à l'option "Statistiques"</p>
-                </div>
-                </div>
-            </div>
+        <div class="card-body grid-child">
+            <canvas style="width: 100px;" baseChart [datasets]="barChartData1" [labels]="barChartLabels1"
+                [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+                [chartType]="barChartType" [colors]="chartColors1">
+            </canvas>
         </div>
-
+        
     </div>
-
--->
-
+    <!--
+    <div class="card shadow mb-4">
+        <div class="card-body">
+          <div style="display: flex;
+          justify-content: center;" class="chartjs-block">
+      <canvas height="600" width="1100" baseChart 
+          [datasets]="lineChartData" 
+          [labels]="lineChartLabels" 
+          [options]="lineChartOptions"
+          [colors]="lineChartColors" 
+          [legend]="lineChartLegend" 
+          [chartType]="'line'" 
+          [plugins]="lineChartPlugins">
+      </canvas>
+  </div>
+</div>
+</div>-->
 </body>

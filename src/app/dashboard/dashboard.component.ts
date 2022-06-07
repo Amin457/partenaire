@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { Color, Label } from 'ng2-charts';
 import { Datestat } from '../models/date-model';
 import { StatRecService } from '../services/stat-rec.service';
 import { DatePipe, formatDate } from '@angular/common';
@@ -9,6 +9,7 @@ import { Partenaire } from '../models/partenaire_model';
 import { PromotionService } from '../services/promotion.service';
 import { Promo } from '../models/promotion-model';
 import { environment } from 'src/environments/environment';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -43,8 +44,46 @@ export class DashboardComponent implements OnInit {
   dateDebut!: any;
   public barChartOptions: ChartOptions = {
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
   };
-  public barChartLabels: Label[] = ['1/2', '2/2', '3/2', '4/2', '5/2', '6/2', '7/2'];
+  //////linechart
+  lineChartData: ChartDataSets[] = [
+    { data: [10,9,5,1], label: 'statistiques des carte' },
+  ];
+  lineChartLabels: Label[] = ['f','f','r','f'];
+
+  lineChartOptions = {
+    responsive: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  };
+
+  lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(0,0,255,0.3)',
+    },
+  ];
+
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
+
+  /////barchart
+  public barChartLabels: Label[] = [];
+  public barChartLabels1: Label[] = [];
+
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [];
@@ -56,22 +95,26 @@ export class DashboardComponent implements OnInit {
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(225,10,24,0.2)'
-    },
-    { // second color
-      backgroundColor: '#b1c2fd',
-      borderColor: 'rgba(225,10,24,0.2)',
-      pointBackgroundColor: 'rgba(225,10,24,0.2)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(225,10,24,0.2)'
     }];
 
+    public chartColors1: Array<any> = [
+      { // second color
+        backgroundColor: '#b1c2fd',
+        borderColor: 'rgba(225,10,24,0.2)',
+        pointBackgroundColor: 'rgba(225,10,24,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+      }];
+
   public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Réclamations' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Feedbacks' }
+    { data: [], label: 'Réclamations' },
+  ];
+  public barChartData1: ChartDataSets[] = [
+    { data: [], label: 'Feedback' },
   ];
 
-  constructor(private service: StatRecService,private servicePromotion : PromotionService) {
+  constructor(private service: StatRecService,private feedbackService: FeedbackService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -114,16 +157,29 @@ export class DashboardComponent implements OnInit {
       })
     });
 
+this.service.statSemaineRec(this.obj).subscribe(res => {
+  console.log('hhhhhhhhhhhhhhhhhhhh', res);
+  for (var index in res.data) {
+    
+    this.barChartLabels.push(res.data[index].day+" "+res.data[index].nDay);
+     this.barChartData[0].data?.push(res.data[index].nbrTotal);
+
+   }
+ 
+})
+
+this.feedbackService.statSemaineFeed(this.obj).subscribe(res => {
+  console.log('hhhhhhhhhhhhhhhhhhhh', res);
+  for (var index in res.data) {
+    
+    this.barChartLabels1.push(res.data[index].day+" "+res.data[index].nDay);
+     this.barChartData1[0].data?.push(res.data[index].nbrTotal);
+
+   }
+ 
+})
 
 
-    this.token = localStorage.getItem('token');
-    this.decoded = jwt_decode(this.token);
-    this.partenaire = this.decoded.result;
-    console.log(this.partenaire);
-
-    this.servicePromotion.Getall(this.partenaire.id_part).subscribe(res => {
-      this.promotions = res.data;
-    })
   }
 
   date() {

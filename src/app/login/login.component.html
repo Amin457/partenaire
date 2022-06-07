@@ -80,6 +80,9 @@
                 <button type="submit" class="btn btn-primary btn-block mb-4" (click)="login()">
                   Sign up
                 </button>
+                <a type="submit" (click)="open1()">
+                  demande de partenariat
+                </a>
   
                
               </form>
@@ -90,3 +93,61 @@
     </div>
   </section>
   <!-- Section: Design Block -->
+  <div class="modal fade my-modal" tabindex="-1" role="dialog" #add>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+ 
+          <div class="col-md-12">
+            <label for="about">Nom de l'organisme</label>
+            <div>
+                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="nomAdd">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label for="about">Fax</label>
+            <div>
+                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="faxAdd">
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <label for="about" >Télephone</label>
+            <div>
+                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="telAdd">
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <label for="about">Code Postal</label>
+            <div>
+                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="codePostalAdd">
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <label for="about">Mail</label>
+            <div>
+                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="mailAdd">
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <label for="about">Mot de passe</label>
+            <div>
+                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="mdpAdd">
+            </div>
+        </div>
+        <br>
+        <input type="file" name="file" (change)="onFileSelectedAdd($event)">
+        <div class="mt-5 text-center">
+            <button  (click)="AddPartenaire()" class="btn btn-primary profile-button">Ajouter
+        </button>
+        </div>           
+ <button type="button" class="btn btn-secondary" (click)="close1()">Close
+            </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>

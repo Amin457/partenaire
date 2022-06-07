@@ -31,6 +31,7 @@ import { ProfilComponent } from './profil/profil.component';
 import { ChartfeedComponent } from './chartfeed/chartfeed.component';
 import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
+import { PromoPipe } from './pipes/promo.pipe';
 
 
 
@@ -59,6 +60,7 @@ import { ToastrModule } from 'ngx-toastr';
     RepportFeedComponent,
     ProfilComponent,
     ChartfeedComponent,
+    PromoPipe,
     
     
     

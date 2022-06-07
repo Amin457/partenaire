@@ -16,7 +16,7 @@ export class StatRecService {
   url_personnel=environment.Api +'api/statRec/getNbPersonel'
   url_mois=environment.Api +'api/statRec/getNbRecParMoix'
   url_boutique=environment.Api +'api/statRec/getNbRecParBoutique'
-
+  url=environment.Api +'api/statRec/'
   constructor(private http:HttpClient) { }
 
   Getreclamation(date:Datestat):Observable<any>{
@@ -42,4 +42,13 @@ export class StatRecService {
   GetRecBoutique(date:Datestat):Observable<any>{
     return this.http.post<Datestat>(`${this.url_boutique}`,date);
   }
+
+
+  //dashbord
+  statSemaineRec(date:Datestat):Observable<any>{
+    return this.http.post<Datestat>(`${this.url}`+'statSemaine',date);
+  }
 }
+/*
+http://localhost:3000/api/statRec/statSemaine
+*/

@@ -62,29 +62,14 @@
                         <br>
                         <label for="about">Mot de passe</label>
                         <div>
-                            <input type="text" class="form-control" name="dateDebut" placeholder="Mot de passe"
-                            formControlName="mdp">
+                            <input type="password" class="form-control" name="dateDebut" placeholder="Mot de passe"
+                            formControlName="mdp" >
+                           
                         </div>
                     </div>
                 </div>
                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button"
                         (click)="Update()">Mise à jour le profil</button></div>
-                        <br>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert"
-                    style="width:40rem; margin-left: auto; margin-right: auto;" *ngIf="updated">
-                    <strong>HEY!</strong> Votre profil est mise à jour avec succés.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="alert alert-warning alert-dismissible fade show" role="alert"
-                    style="width:40rem; margin-left: auto; margin-right: auto;" *ngIf="NotUpdated">
-                    <strong>SVP!</strong> Veuillez vérifier les champs.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
             </div>
         </div>
     </div>
