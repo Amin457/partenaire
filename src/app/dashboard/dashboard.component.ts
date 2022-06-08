@@ -10,6 +10,8 @@ import { PromotionService } from '../services/promotion.service';
 import { Promo } from '../models/promotion-model';
 import { environment } from 'src/environments/environment';
 import { FeedbackService } from '../services/feedback.service';
+import { Gagnants } from '../models/gagnants';
+import { JeuxCadeauxService } from '../services/jeux-cadeaux.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +22,8 @@ import { FeedbackService } from '../services/feedback.service';
 export class DashboardComponent implements OnInit {
   images:string[] = [];
   ApiImg = environment.Api + "api/files/get/"
+  nbrFeed=0;
+  nbrgagnant=0;
 
  
 
@@ -52,37 +56,12 @@ export class DashboardComponent implements OnInit {
       }]
     }
   };
-  //////linechart
-  lineChartData: ChartDataSets[] = [
-    { data: [10,9,5,1], label: 'statistiques des carte' },
-  ];
-  lineChartLabels: Label[] = ['f','f','r','f'];
-
-  lineChartOptions = {
-    responsive: false,
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  };
-
-  lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(0,0,255,0.3)',
-    },
-  ];
-
-  lineChartLegend = true;
-  lineChartPlugins = [];
-  lineChartType = 'line';
-
+ 
   /////barchart
   public barChartLabels: Label[] = [];
   public barChartLabels1: Label[] = [];
+  public barChartLabels2: Label[] = [];
+
 
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
@@ -113,8 +92,10 @@ export class DashboardComponent implements OnInit {
   public barChartData1: ChartDataSets[] = [
     { data: [], label: 'Feedback' },
   ];
-
-  constructor(private service: StatRecService,private feedbackService: FeedbackService) {
+  public barChartData2: ChartDataSets[] = [
+    { data: [], label: 'nombre de gagnants par jour' },
+  ];
+  constructor(private service: StatRecService,private feedbackService: FeedbackService,private jeuxCadeauxService :  JeuxCadeauxService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -158,7 +139,6 @@ export class DashboardComponent implements OnInit {
     });
 
 this.service.statSemaineRec(this.obj).subscribe(res => {
-  console.log('hhhhhhhhhhhhhhhhhhhh', res);
   for (var index in res.data) {
     
     this.barChartLabels.push(res.data[index].day+" "+res.data[index].nDay);
@@ -169,17 +149,24 @@ this.service.statSemaineRec(this.obj).subscribe(res => {
 })
 
 this.feedbackService.statSemaineFeed(this.obj).subscribe(res => {
-  console.log('hhhhhhhhhhhhhhhhhhhh', res);
   for (var index in res.data) {
     
     this.barChartLabels1.push(res.data[index].day+" "+res.data[index].nDay);
      this.barChartData1[0].data?.push(res.data[index].nbrTotal);
-
+     this.nbrFeed=this.nbrFeed+res.data[index].nbrTotal; 
    }
  
 })
 
-
+  this.jeuxCadeauxService.statSemaineGagnants(this.obj).subscribe(res => {
+    for (var index in res.data) {
+      
+      this.barChartLabels2.push(res.data[index].day+" "+res.data[index].nDay);
+       this.barChartData2[0].data?.push(res.data[index].nbrTotal);
+       this.nbrgagnant=this.nbrgagnant+res.data[index].nbrTotal; 
+     }
+   
+  })
   }
 
   date() {

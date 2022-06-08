@@ -33,6 +33,7 @@ export class GererFeedbacksComponent implements OnInit {
   alert_reponse = false;
   alert_validation = false;
   valide : boolean=false;
+  AllReponse:any[]=[];
   constructor(private service: FeedbackService) { }
 
   ngOnInit(): void {
@@ -54,6 +55,11 @@ export class GererFeedbacksComponent implements OnInit {
       },
     );
 
+    this.service.getAllReponse().subscribe(
+       (res) => {
+         console.log(res.data);
+         this.AllReponse=res.data;
+    })
   }
 
 
@@ -86,7 +92,11 @@ export class GererFeedbacksComponent implements OnInit {
 
       })
     }
-
+    this.service.getAllReponse().subscribe(
+      (res) => {
+        console.log(res.data);
+        this.AllReponse=res.data;
+   })
   }
 
 
@@ -106,6 +116,11 @@ export class GererFeedbacksComponent implements OnInit {
 
       },
     );
+    this.service.getAllReponse().subscribe(
+      (res) => {
+        console.log(res.data);
+        this.AllReponse=res.data;
+   })
   }
 
   deleteQuestion(id_question: number) {

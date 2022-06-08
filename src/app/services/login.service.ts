@@ -15,4 +15,7 @@ export class LoginService {
 
   login(partenaire: any): Observable<any>{
     return  this.http.post<any>(`${this._Url}`+'login',partenaire);}
+  
+  demandePartenariat(partenaire: any): Observable<any>{
+      return  this.http.post<any>(`${this._Url}`+'demandePartenariat',partenaire);}
 }

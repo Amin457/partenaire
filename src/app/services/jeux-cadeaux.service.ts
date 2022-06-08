@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Cadeaux } from '../models/tab-cadeaux-model';
 import { Gagnants } from '../models/gagnants';
 import { environment } from 'src/environments/environment';
+import { Datestat } from '../models/date-model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class JeuxCadeauxService {
 
   updateEtatJeux(id_part:number):Observable<any>{
     return this.http.patch<any>(`${this.url}`+`updateEtatJeux/`+id_part,{});
+  }
+
+  statSemaineGagnants(date:Datestat):Observable<any>{
+    return this.http.post<Datestat>(`${this.url}`+'statSemaineGagnants',date);
   }
 }

@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Partenaire } from '../models/partenaire_model';
+import { FilesService } from '../services/files.service';
 import { LoginService } from '../services/login.service';
 
 
@@ -21,11 +23,12 @@ export class LoginComponent implements OnInit {
   faxAdd!: string;
   codePostalAdd!: any;
   mdpAdd!: string;
-  selectedFileAdd: any;
   fileAdd: any;
+  selectedFile:any;
+
   partenaireAdd: Partenaire = new Partenaire();
 
-  constructor( private LoginService:LoginService, private router:Router) {
+  constructor( private LoginService:LoginService, private router:Router,private fileservice:FilesService) {
     this.initForm();
    }
    ngAfterViewInit(): void {
@@ -37,6 +40,8 @@ export class LoginComponent implements OnInit {
   }
   onFileSelectedAdd(event: any) {
     this.fileAdd = event.target.files[0];
+    this.selectedFile=this.fileAdd;
+
   }
   close1(): void {
     this.elm1.classList.remove('show');
@@ -50,14 +55,44 @@ export class LoginComponent implements OnInit {
   }
 
   AddPartenaire(){
-    this.partenaireAdd.Fax=this.faxAdd;
-    this.partenaireAdd.codePostal=this.codePostalAdd;
-    this.partenaireAdd.mail=this.mailAdd;
-    this.partenaireAdd.mdp=this.mdpAdd;
-    this.partenaireAdd.societe=this.nomAdd;
-    this.partenaireAdd.tel=this.telAdd;
-    console.log(this.partenaireAdd)
+    const formData = new FormData();
+    formData.append('file',this.selectedFile);
+    if (this.fileAdd == undefined||this.nomAdd == '' || this.faxAdd.length < 8 || this.mdpAdd.length < 8 || this.codePostalAdd == '' || this.mailAdd == '' ||  this.telAdd.length < 8) {
+      Swal.fire('invalide', 'Vérifier les champs', 'error');
+    } else {
+    
+    this.fileservice.postFile(formData).subscribe(res=>{
+      this.partenaireAdd.img=res.data;
+      this.partenaireAdd.Fax=this.faxAdd;
+      this.partenaireAdd.codePostal=this.codePostalAdd;
+      this.partenaireAdd.mail=this.mailAdd;
+      this.partenaireAdd.mdp=this.mdpAdd;
+      this.partenaireAdd.societe=this.nomAdd;
+      this.partenaireAdd.tel=this.telAdd;
+      console.log(this.partenaireAdd)
+      this.LoginService.demandePartenariat(this.partenaireAdd).subscribe(  
+        (res)  => {
+            console.log(res);
+              
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'demande partnariat ajouté avec succés',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.close1();
+        },
+        error => {
+          
+        });
+    
+      })
+    }
   }
+
+ 
+
   initForm() {
     this.form1 = new FormGroup({
       mail: new FormControl('',
@@ -77,6 +112,8 @@ export class LoginComponent implements OnInit {
       (res)  => {
         if(res.unauthorised===true){
           console.log(res);
+          Swal.fire('invalide', 'Vérifier vos données', 'error');
+
         return false;
       }else{
         localStorage.setItem('token',res.token);
@@ -85,7 +122,8 @@ export class LoginComponent implements OnInit {
       }
       },
       error => {
-        
+        Swal.fire('invalide', 'Vérifier vos données', 'error');
+
       });
   }
 }

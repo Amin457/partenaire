@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-4 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                    width="150px" src="{{ApiImg+img}}"><span class="font-weight-bold">{{nom}}</span><span
+                    width="150px" src="{{ApiImg+this.partenaire.img}}"><span class="font-weight-bold">{{nom}}</span><span
                     class="text-black-50">{{mail}}</span><span>
                 </span></div>
         </div>
@@ -23,7 +23,7 @@
                         <label for="about">Nom de l'organisme</label>
                         <div>
                             <input type="text" class="form-control" name="dateDebut" placeholder="Nom de l'organisme"
-                            formControlName="nom">
+                                formControlName="nom">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -31,7 +31,7 @@
                         <label for="about">Fax</label>
                         <div>
                             <input type="text" class="form-control" name="dateDebut" placeholder="Fax"
-                            formControlName="fax">
+                                formControlName="fax">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -39,7 +39,7 @@
                         <label for="about">Télephone</label>
                         <div>
                             <input type="text" class="form-control" name="dateDebut" placeholder="Télephone"
-                            formControlName="tel">
+                                formControlName="tel">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -47,7 +47,7 @@
                         <label for="about">Code Postal</label>
                         <div>
                             <input type="text" class="form-control" name="dateDebut" placeholder="Code Postal"
-                            formControlName="codePostal">
+                                formControlName="codePostal">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -55,7 +55,7 @@
                         <label for="about">Mail</label>
                         <div>
                             <input type="text" class="form-control" name="dateDebut" placeholder="Mail"
-                            formControlName="mail">
+                                formControlName="mail">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -63,9 +63,16 @@
                         <label for="about">Mot de passe</label>
                         <div>
                             <input type="password" class="form-control" name="dateDebut" placeholder="Mot de passe"
-                            formControlName="mdp" >
-                           
+                                formControlName="mdp">
+
                         </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <label for="about">image</label>
+                    <div>
+                        <input type="file" name="file" (change)="onFileSelected($event)">
+                    </div>
                     </div>
                 </div>
                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button"

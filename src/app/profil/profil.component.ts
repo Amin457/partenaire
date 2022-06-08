@@ -5,6 +5,7 @@ import { ProfilService } from '../services/profil.service';
 import { environment } from 'src/environments/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
+import { FilesService } from '../services/files.service';
 
 @Component({
   selector: 'app-profil',
@@ -30,11 +31,11 @@ export class ProfilComponent implements OnInit {
   partenaireUpdated:Partenaire = new Partenaire();
 
   ApiImg= environment.Api +"api/files/get/";
-  img!:string;
 
 
-  
-  constructor(private service:ProfilService) {
+  file: any;
+  selectedFile:any;
+  constructor(private service:ProfilService,private fileservice:FilesService) {
     this.initForm();
    }
 
@@ -58,21 +59,31 @@ export class ProfilComponent implements OnInit {
 
     this.token=localStorage.getItem('token');
     this.decoded = jwt_decode(this.token);
-    this.partenaire=this.decoded.result;
-    console.log(this.partenaire);
+    
+    this.service.getPartenaireById(this.decoded.result.id_part).subscribe(res=>{
+      this.partenaire=res.data[0];
+      console.log("ggggggggggggg",this.partenaire);
 
+      
+    })
     this.nom=this.partenaire.societe;
     this.fax=this.partenaire.Fax;
     this.tel=this.partenaire.tel;
     this.codePostal=this.partenaire.codePostal;
     this.mail=this.partenaire.mail;
     this.mdp=this.partenaire.mdp;
-    this.img=this.partenaire.img;
     
 
   }
 
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+    this.selectedFile=this.file;
+
+  }
   Update(){
+    const formData = new FormData();
+    formData.append('file',this.selectedFile);
     if(this.form.value.mdp.length<8||this.form.value.nom.length<3||this.form.value.mail.length<5||this.form.value.codePostal.length<4||this.form.value.tel.length<8||this.form.value.fax.length<8){
       Swal.fire({
         title: 'Error!',
@@ -80,9 +91,33 @@ export class ProfilComponent implements OnInit {
         icon: 'error',
         confirmButtonText: 'ok'
       })
+    }else if(this.file==undefined){
+      this.partenaireUpdated.id_part=this.partenaire.id_part;
+      this.partenaireUpdated.societe=this.form.value.nom;
+      this.partenaireUpdated.Fax=this.form.value.fax;
+      this.partenaireUpdated.tel=this.form.value.tel;
+      this.partenaireUpdated.codePostal=this.form.value.codePostal;
+      this.partenaireUpdated.mail=this.form.value.mail;
+      this.partenaireUpdated.mdp=this.form.value.mdp;
+    
+      this.partenaireUpdated.img=this.partenaire.img;
+        this.service.UpdateProfil(this.partenaireUpdated).subscribe(res=>{
+          console.log(res);
+          this.service.getPartenaireById(this.partenaire.id_part).subscribe(res=>{
+            this.partenaire=res.data[0];
+          })
+              Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Votre profil est mise à jour avec succés',
+              showConfirmButton: false,
+              timer: 1500
+            })
+  
+          
+        })
+
     }else{
-    this.id_part=this.partenaire.id_part;
-    console.log(this.partenaire.id_part);
     this.partenaireUpdated.id_part=this.partenaire.id_part;
     this.partenaireUpdated.societe=this.form.value.nom;
     this.partenaireUpdated.Fax=this.form.value.fax;
@@ -91,27 +126,33 @@ export class ProfilComponent implements OnInit {
     this.partenaireUpdated.mail=this.form.value.mail;
     this.partenaireUpdated.mdp=this.form.value.mdp;
     console.log(this.partenaireUpdated);
-
-    this.service.UpdateProfil(this.partenaireUpdated).subscribe(res=>{
-      console.log(res);
-      if(res.success==1){
-          Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Votre profil est mise à jour avec succés',
-          showConfirmButton: false,
-          timer: 1500
+    this.fileservice.postFile(formData).subscribe(res=>{
+    this.partenaireUpdated.img=res.data;
+      this.service.UpdateProfil(this.partenaireUpdated).subscribe(res=>{
+        console.log(res);
+        this.service.getPartenaireById(this.partenaire.id_part).subscribe(res=>{
+          this.partenaire=res.data[0];
         })
-      }
-      else{
-        Swal.fire({
-          title: 'Error!',
-          text: 'vérfier les champs',
-          icon: 'error',
-          confirmButtonText: 'ok'
-        })      }
-      
+        if(res.success==1){
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Votre profil est mise à jour avec succés',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        else{
+          Swal.fire({
+            title: 'Error!',
+            text: 'vérfier les champs',
+            icon: 'error',
+            confirmButtonText: 'ok'
+          })      }
+        
+      })
     })
+    
   }
   }
 

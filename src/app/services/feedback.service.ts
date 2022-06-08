@@ -44,6 +44,10 @@ export class FeedbackService {
     return this.http.delete<any>(`${this._url}`+id_question);
   }
 
+  getAllReponse(): Observable<any> {
+    return this.http.get<Feedback>(`${this._url}` + `getAllReponse`);
+  }
+
   //statistiques
 
   StatFeedQuestion(obj:StatFeed):Observable<any>{
