@@ -65,7 +65,8 @@ export class GererFeedbacksComponent implements OnInit {
 
 
   addResponse() {
-    if (this.reponse == undefined || this.question == undefined) {
+    if (this.reponse == "" || this.question == "" || this.reponse == undefined || this.question == undefined) {
+      
       Swal.fire({
         position: 'top-end',
         icon: 'error',

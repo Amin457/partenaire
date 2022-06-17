@@ -6,6 +6,7 @@ import { Partenaire } from '../models/partenaire_model';
 import { FilesService } from '../services/files.service';
 import { LoginService } from '../services/login.service';
 
+import { emailValidator } from './email-validator.directive';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,10 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  showPassword: boolean=false;
+  reactiveForm!: FormGroup;
+  user: Partenaire = new Partenaire();
+
   form1!: FormGroup;
   @ViewChild('add', { static: false }) myModal1!: ElementRef;
   elm1!: HTMLElement;
@@ -36,8 +41,107 @@ export class LoginComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.reactiveForm = new FormGroup({
+      societe: new FormControl("", [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(30),
+      ]),
+      mail: new FormControl("", [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250),
+        emailValidator(),
+      ]),
+      mdp: new FormControl("", [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      codePostal: new FormControl("", [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(6),
+      ]),
+      tel: new FormControl("", [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(10)
+        ]),
+      img: new FormControl("", [
+        Validators.required,
+      ]),
+      Fax: new FormControl("", [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(10),
+      ])
+    });
+  }
+
+  get Fax() {
+    return this.reactiveForm.get('Fax')!;
+  }
+
+  get img() {
+    return this.reactiveForm.get('img')!;
+  }
+
+  get tel(){
+    return this.reactiveForm.get('tel')!;
 
   }
+  get societe() {
+    return this.reactiveForm.get('societe')!;
+  }
+
+  get mail() {
+    return this.reactiveForm.get('mail')!;
+  }
+
+  get mdp() {
+    return this.reactiveForm.get('mdp')!;
+  }
+
+  get codePostal(){
+    return this.reactiveForm.get('codePostal')!;
+
+  }
+
+  public validate(): void {
+    if (this.reactiveForm.invalid) {
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file',this.selectedFile);
+
+    this.fileservice.postFile(formData).subscribe(res=>{
+      this.user = this.reactiveForm.value;
+      this.user.img=res.data;
+    console.info('Name:', this.user);
+      this.LoginService.demandePartenariat(this.user).subscribe(  
+        (res)  => {
+            console.log(res);
+              
+        Swal.fire({
+          icon: 'success',
+          title: 'demande partnariat ajouté avec succés',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.close1();
+        },
+        error => {
+          
+        });
+    
+      })
+ 
+
+  }
+
   onFileSelectedAdd(event: any) {
     this.fileAdd = event.target.files[0];
     this.selectedFile=this.fileAdd;
@@ -54,44 +158,6 @@ export class LoginComponent implements OnInit {
     this.elm1.style.width = '100vw';
   }
 
-  AddPartenaire(){
-    const formData = new FormData();
-    formData.append('file',this.selectedFile);
-    if (this.fileAdd == undefined||this.nomAdd == '' || this.faxAdd.length < 8 || this.mdpAdd.length < 8 || this.codePostalAdd == '' || this.mailAdd == '' ||  this.telAdd.length < 8) {
-      Swal.fire('invalide', 'Vérifier les champs', 'error');
-    } else {
-    
-    this.fileservice.postFile(formData).subscribe(res=>{
-      this.partenaireAdd.img=res.data;
-      this.partenaireAdd.Fax=this.faxAdd;
-      this.partenaireAdd.codePostal=this.codePostalAdd;
-      this.partenaireAdd.mail=this.mailAdd;
-      this.partenaireAdd.mdp=this.mdpAdd;
-      this.partenaireAdd.societe=this.nomAdd;
-      this.partenaireAdd.tel=this.telAdd;
-      console.log(this.partenaireAdd)
-      this.LoginService.demandePartenariat(this.partenaireAdd).subscribe(  
-        (res)  => {
-            console.log(res);
-              
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'demande partnariat ajouté avec succés',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        this.close1();
-        },
-        error => {
-          
-        });
-    
-      })
-    }
-  }
-
- 
 
   initForm() {
     this.form1 = new FormGroup({

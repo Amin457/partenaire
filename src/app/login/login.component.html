@@ -98,55 +98,130 @@
       <div class="modal-content">
         <div class="modal-body">
  
-          <div class="col-md-12">
-            <label for="about">Nom de l'organisme</label>
-            <div>
-                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="nomAdd">
-            </div>
-        </div>
-        <div class="col-md-12">
-            <label for="about">Fax</label>
-            <div>
-                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="faxAdd">
-            </div>
-        </div>
-        <div class="col-md-12">
+        
+                <form [formGroup]="reactiveForm" #form="ngForm">
+                  <div class="row">
+                    <div class="col mb-2">
+                      <label for="societe" class="form-label">Nom de l'organisme :</label>
+                      <input type="text" id="societe" name="societe" formControlName="societe" required minlength="2" maxlength="250" class="form-control form-control-sm" [class.is-invalid]="societe.invalid && (societe.dirty || societe.touched)">
+                      <div *ngIf="societe.invalid && (societe.dirty || societe.touched)" class="invalid-feedback">
+                        <div *ngIf="societe.errors?.['required']">
+                          champ obligatoire.
+                        </div>
+                        <div *ngIf="societe.errors?.['minlength']">
+                          au minimum 3 caractère.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <div class="row">
+                    <div class="col mb-2">
+                      <label for="mail" class="form-label">Email:</label>
+                      <input type="mail" id="mail" name="mail" formControlName="mail" placeholder="exemple@exemple.com" required minlength="1" maxlength="250" class="form-control form-control-sm" [class.is-invalid]="mail.invalid && (mail.dirty || mail.touched)">
+                      <div *ngIf="mail.invalid && (mail.dirty || mail.touched)" class="invalid-feedback">
+                        <div *ngIf="mail.errors?.['required']">
+                          champ obligatoire.
+                        </div>
+                        <div *ngIf="!mail.errors?.['required'] && !mail.errors?.['minlength'] && !mail.errors?.['maxlength'] && mail.errors?.['emailValidator']">
+                          Format email invalide.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-2">
+                      <label for="mdp" class="form-label">Mot de passe:</label>
+                      <div class="input-group input-group-sm has-validation">
+                        <input [type]="showPassword ? 'text' : 'password'" id="mdp" name="mdp" formControlName="mdp" required minlength="8" class="form-control form-control-sm" [class.is-invalid]="mdp.invalid && (mdp.dirty || mdp.touched)">
+                        <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                          </svg>
+                        </button>
+                        <div *ngIf="mdp.invalid && (mdp.dirty || mdp.touched)" class="invalid-feedback">
+                          <div *ngIf="mdp.errors?.['required']">
+                            champ obligatoire.
+                          </div>
+                          <div *ngIf="mdp.errors?.['minlength']">
+                            au minimum 8 caractère.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--1-->
+                  <div class="row">
+                    <div class="col mb-2">
+                      <label for="codePostal" class="form-label">code Postal :</label>
+                      <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" id="codePostal" name="codePostal" formControlName="codePostal"  required minlength="1" maxlength="250" class="form-control form-control-sm" [class.is-invalid]="codePostal.invalid && (codePostal.dirty || codePostal.touched)">
+                      <div *ngIf="codePostal.invalid && (codePostal.dirty || codePostal.touched)" class="invalid-feedback">
+                        <div *ngIf="codePostal.errors?.['required']">
+                          champ obligatoire.
+                        </div>
+                        <div *ngIf="codePostal.errors?.['minlength']">
+                          au minimum 4 chiffre.
+                        </div>
+        
+                      </div>
+                    </div>
+                  </div>
+                  <!--2-->
+                  <div class="row">
+                    <div class="col mb-2">
+                      <label for="tel" class="form-label">tel :</label>
+                      <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" id="tel" name="tel" formControlName="tel"  required minlength="8" maxlength="10" class="form-control form-control-sm" [class.is-invalid]="tel.invalid && (tel.dirty || tel.touched)">
+                      <div *ngIf="tel.invalid && (tel.dirty || tel.touched)" class="invalid-feedback">
+                        <div *ngIf="tel.errors?.['required']">
+                          champ obligatoire.
+                        </div>
+                        <div *ngIf="tel.errors?.['minlength']">
+                          au minimum 8 chiffre.
+                        </div>
+    
+                      </div>
+                    </div>
+                  </div>
+                  <!--3-->
+                  <div class="row">
+                    <div class="col mb-2">
+                      <label for="Fax" class="form-label">Fax :</label>
+                      <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" id="Fax" name="Fax" formControlName="Fax"  required minlength="8" maxlength="10" class="form-control form-control-sm" [class.is-invalid]="Fax.invalid && (Fax.dirty || Fax.touched)">
+                      <div *ngIf="Fax.invalid && (Fax.dirty || Fax.touched)" class="invalid-feedback">
+                        <div *ngIf="Fax.errors?.['required']">
+                          champ obligatoire.
+                        </div>
+                        <div *ngIf="Fax.errors?.['minlength']">
+                          au minimum 8 chiffre.
+                        </div>
+    
+                      </div>
+                    </div>
+                  </div>
+                  <!--4-->
+                  <div class="row">
+                    <div class="col mb-2">
+                      <label for="img" class="form-label">Image :</label>
+                      <input (change)="onFileSelectedAdd($event)"  type="file" id="img" name="img" formControlName="img"  class="form-control form-control-sm" [class.is-invalid]="img.invalid && (img.dirty || img.touched)">
+                      <div *ngIf="img.invalid && (img.dirty || img.touched)" class="invalid-feedback">
+                        <div *ngIf="img.errors?.['required']">
+                          champ obligatoire.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            <label for="about" >Télephone</label>
-            <div>
-                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="telAdd">
-            </div>
-        </div>
-        <div class="col-md-12">
-
-            <label for="about">Code Postal</label>
-            <div>
-                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="codePostalAdd">
-            </div>
-        </div>
-        <div class="col-md-12">
-
-            <label for="about">Mail</label>
-            <div>
-                <input type="text" class="form-control" name="dateDebut" [(ngModel)]="mailAdd">
-            </div>
-        </div>
-        <div class="col-md-12">
-
-            <label for="about">Mot de passe</label>
-            <div>
-                <input type="password" class="form-control" name="dateDebut" [(ngModel)]="mdpAdd">
-            </div>
-        </div>
-        <br>
-        <input type="file" name="file" (change)="onFileSelectedAdd($event)">
-        <div class="mt-5 text-center">
-            <button  (click)="AddPartenaire()" class="btn btn-primary profile-button">Ajouter
-        </button>
-        </div>           
- <button type="button" class="btn btn-secondary" (click)="close1()">Close
-            </button>
-          
+                  <div class="row">
+                    <div class="col mb-2 d-grid">
+                      <button type="button" class="btn btn-sm btn-primary" (click)="validate()">Valider</button>
+                    </div>
+                  </div>
+                </form>
+             
+            
+                <button type="button" class="btn btn-secondary" (click)="close1()">Close
+                </button>
         </div>
       </div>
     </div>

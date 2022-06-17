@@ -33,7 +33,7 @@ export class RepportFeedComponent implements OnInit {
   feedback: Feedback[]=[];
   //////line chart
   lineChartData: ChartDataSets[] = [
-    { data: [], label: 'statistiques des reclamation' },
+    { data: [], label: 'statistiques des Feedbacks' },
   ];
 
   lineChartLabels: Label[] = [];

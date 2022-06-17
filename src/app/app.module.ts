@@ -61,9 +61,7 @@ import { PromoPipe } from './pipes/promo.pipe';
     ProfilComponent,
     ChartfeedComponent,
     PromoPipe,
-    
-    
-    
+   
   ],
   imports: [
     BrowserModule,

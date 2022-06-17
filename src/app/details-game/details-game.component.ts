@@ -9,6 +9,7 @@ import { Addcadeau } from '../models/add-cadeau-model';
 import { Partenaire } from '../models/partenaire_model';
 import jwt_decode  from 'jwt-decode';
 import { Gagnants } from '../models/gagnants';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -116,6 +117,12 @@ export class DetailsGameComponent implements AfterViewInit {
   
       }) 
     }
+  }
+
+  date(date1 : Date) {
+
+    let datePipe: DatePipe = new DatePipe('en-US');
+    return datePipe.transform(new Date(date1),'yyyy-MM-dd');
   }
 }
 

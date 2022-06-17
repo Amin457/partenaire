@@ -107,7 +107,6 @@ export class ProfilComponent implements OnInit {
             this.partenaire=res.data[0];
           })
               Swal.fire({
-              position: 'top-end',
               icon: 'success',
               title: 'Votre profil est mise à jour avec succés',
               showConfirmButton: false,
@@ -135,7 +134,6 @@ export class ProfilComponent implements OnInit {
         })
         if(res.success==1){
             Swal.fire({
-            position: 'top-end',
             icon: 'success',
             title: 'Votre profil est mise à jour avec succés',
             showConfirmButton: false,

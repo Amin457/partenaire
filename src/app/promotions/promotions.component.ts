@@ -83,7 +83,6 @@ export class PromotionsComponent implements OnInit {
           this.service.Getall(this.partenaire.id_part).subscribe(res => {
             this.promotions = res.data;
             Swal.fire({
-              position: 'top-end',
               icon: 'success',
               title: 'promotion supprimé',
               showConfirmButton: false,
@@ -164,11 +163,13 @@ export class PromotionsComponent implements OnInit {
       this.service.updatePromo(this.promoUpdated).subscribe(res => {
         console.log('it works', res);
         Swal.fire({
-          position: 'top-end',
           icon: 'success',
           title: 'promotion modifié avec succée',
           showConfirmButton: false,
           timer: 1500
+        })
+        this.service.Getall(this.partenaire.id_part).subscribe(res => {
+          this.promotions = res.data;
         })
       })
 
@@ -190,13 +191,15 @@ export class PromotionsComponent implements OnInit {
             this.promotions = res.data;
           })
           Swal.fire({
-            position: 'top-end',
             icon: 'success',
             title: 'promotion modifié avec succée',
             showConfirmButton: false,
             timer: 1500
           })
           this.close();
+          this.service.Getall(this.partenaire.id_part).subscribe(res => {
+            this.promotions = res.data;
+          })
         })
 
       })
