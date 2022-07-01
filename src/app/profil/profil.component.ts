@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { FilesService } from '../services/files.service';
+import { emailValidator } from './email-validator.directive';
 
 @Component({
   selector: 'app-profil',
@@ -13,6 +14,9 @@ import { FilesService } from '../services/files.service';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
+
+  showPassword: boolean=false;
+  reactiveForm!: FormGroup;
   //formGroup
   form!: FormGroup;
 
@@ -20,13 +24,6 @@ export class ProfilComponent implements OnInit {
   token !: any
   decoded: any;
 
-  nom!:string;
-  tel!:string;
-  mail!:string;
-  fax!:string;
-  codePostal!:any;
-  mdp!:string;
-  id_part!:number;
 
   partenaireUpdated:Partenaire = new Partenaire();
 
@@ -36,43 +33,92 @@ export class ProfilComponent implements OnInit {
   file: any;
   selectedFile:any;
   constructor(private service:ProfilService,private fileservice:FilesService) {
-    this.initForm();
+   
    }
 
    initForm() {
     this.token=localStorage.getItem('token');
     this.decoded = jwt_decode(this.token);
-    this.partenaire=this.decoded.result;
-    console.log(this.partenaire);
-  
-    this.form = new FormGroup({
-      nom: new FormControl(this.partenaire.societe, {validators: [Validators.required]}),
-      fax: new FormControl(this.partenaire.Fax, {validators: [Validators.required, Validators.minLength(8)]}),
-      tel: new FormControl(this.partenaire.tel, {validators: [Validators.required, Validators.minLength(8)]}),
-      codePostal: new FormControl(this.partenaire.codePostal, {validators: [Validators.required, Validators.minLength(4)]}),
-      mail: new FormControl(this.partenaire.mail, {validators: [Validators.required, Validators.email]}),
-      mdp: new FormControl(this.partenaire.mdp, {validators: [Validators.required, Validators.minLength(8)]}),
-    });
-  }
-
-  ngOnInit(): void {
-
-    this.token=localStorage.getItem('token');
-    this.decoded = jwt_decode(this.token);
-    
     this.service.getPartenaireById(this.decoded.result.id_part).subscribe(res=>{
       this.partenaire=res.data[0];
       console.log("ggggggggggggg",this.partenaire);
-
-      
+      this.reactiveForm = new FormGroup({
+        id_part: new FormControl(this.partenaire.id_part, [
+          Validators.required,
+        ]),
+        societe: new FormControl(this.partenaire.societe, [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(30),
+        ]),
+        mail: new FormControl(this.partenaire.mail, [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(250),
+          emailValidator(),
+        ]),
+        mdp: new FormControl(this.partenaire.mdp, [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        codePostal: new FormControl(this.partenaire.codePostal, [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(6),
+        ]),
+        tel: new FormControl(this.partenaire.tel, [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(10)
+          ]),
+        img: new FormControl(this.partenaire.img, [
+          Validators.required,
+        ]),
+        Fax: new FormControl(this.partenaire.Fax, [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(10),
+        ])
+      });
     })
-    this.nom=this.partenaire.societe;
-    this.fax=this.partenaire.Fax;
-    this.tel=this.partenaire.tel;
-    this.codePostal=this.partenaire.codePostal;
-    this.mail=this.partenaire.mail;
-    this.mdp=this.partenaire.mdp;
-    
+  
+   
+  }
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+  get Fax() {
+    return this.reactiveForm.get('Fax')!;
+  }
+
+  get img() {
+    return this.reactiveForm.get('img')!;
+  }
+
+  get tel(){
+    return this.reactiveForm.get('tel')!;
+
+  }
+  get societe() {
+    return this.reactiveForm.get('societe')!;
+  }
+
+  get mail() {
+    return this.reactiveForm.get('mail')!;
+  }
+
+  get mdp() {
+    return this.reactiveForm.get('mdp')!;
+  }
+
+  get codePostal(){
+    return this.reactiveForm.get('codePostal')!;
+
+  }
+
+  get id_part(){
+    return this.reactiveForm.get('id_part')!;
 
   }
 
@@ -81,25 +127,25 @@ export class ProfilComponent implements OnInit {
     this.selectedFile=this.file;
 
   }
-  Update(){
+
+  validate(){
+    if (this.reactiveForm.invalid) {
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      return;
+    }
+    console.log(this.reactiveForm.value);
     const formData = new FormData();
     formData.append('file',this.selectedFile);
-    if(this.form.value.mdp.length<8||this.form.value.nom.length<3||this.form.value.mail.length<5||this.form.value.codePostal.length<4||this.form.value.tel.length<8||this.form.value.fax.length<8){
-      Swal.fire({
-        title: 'Error!',
-        text: 'vérfier les champs',
-        icon: 'error',
-        confirmButtonText: 'ok'
-      })
-    }else if(this.file==undefined){
-      this.partenaireUpdated.id_part=this.partenaire.id_part;
-      this.partenaireUpdated.societe=this.form.value.nom;
-      this.partenaireUpdated.Fax=this.form.value.fax;
-      this.partenaireUpdated.tel=this.form.value.tel;
-      this.partenaireUpdated.codePostal=this.form.value.codePostal;
-      this.partenaireUpdated.mail=this.form.value.mail;
-      this.partenaireUpdated.mdp=this.form.value.mdp;
-    
+    if(this.file==undefined){
+      this.partenaireUpdated.id_part=this.reactiveForm.value.id_part;
+      this.partenaireUpdated.societe=this.reactiveForm.value.societe;
+      this.partenaireUpdated.Fax=this.reactiveForm.value.Fax;
+      this.partenaireUpdated.tel=this.reactiveForm.value.tel;
+      this.partenaireUpdated.codePostal=this.reactiveForm.value.codePostal;
+      this.partenaireUpdated.mail=this.reactiveForm.value.mail;
+      this.partenaireUpdated.mdp=this.reactiveForm.value.mdp;
       this.partenaireUpdated.img=this.partenaire.img;
         this.service.UpdateProfil(this.partenaireUpdated).subscribe(res=>{
           console.log(res);
@@ -117,13 +163,13 @@ export class ProfilComponent implements OnInit {
         })
 
     }else{
-    this.partenaireUpdated.id_part=this.partenaire.id_part;
-    this.partenaireUpdated.societe=this.form.value.nom;
-    this.partenaireUpdated.Fax=this.form.value.fax;
-    this.partenaireUpdated.tel=this.form.value.tel;
-    this.partenaireUpdated.codePostal=this.form.value.codePostal;
-    this.partenaireUpdated.mail=this.form.value.mail;
-    this.partenaireUpdated.mdp=this.form.value.mdp;
+      this.partenaireUpdated.id_part=this.partenaire.id_part;
+      this.partenaireUpdated.societe=this.reactiveForm.value.societe;
+      this.partenaireUpdated.Fax=this.reactiveForm.value.Fax;
+      this.partenaireUpdated.tel=this.reactiveForm.value.tel;
+      this.partenaireUpdated.codePostal=this.reactiveForm.value.codePostal;
+      this.partenaireUpdated.mail=this.reactiveForm.value.mail;
+      this.partenaireUpdated.mdp=this.reactiveForm.value.mdp;
     console.log(this.partenaireUpdated);
     this.fileservice.postFile(formData).subscribe(res=>{
     this.partenaireUpdated.img=res.data;
@@ -146,12 +192,14 @@ export class ProfilComponent implements OnInit {
             text: 'vérfier les champs',
             icon: 'error',
             confirmButtonText: 'ok'
-          })      }
+          })}
         
       })
     })
     
   }
+
   }
+  
 
   }

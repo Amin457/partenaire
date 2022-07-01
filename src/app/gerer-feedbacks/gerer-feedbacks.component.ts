@@ -68,7 +68,6 @@ export class GererFeedbacksComponent implements OnInit {
     if (this.reponse == "" || this.question == "" || this.reponse == undefined || this.question == undefined) {
       
       Swal.fire({
-        position: 'top-end',
         icon: 'error',
         title: 'verifier les champs',
         showConfirmButton: false,

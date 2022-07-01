@@ -10,6 +10,7 @@ import { Partenaire } from '../models/partenaire_model';
 import jwt_decode  from 'jwt-decode';
 import { Gagnants } from '../models/gagnants';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -101,7 +102,12 @@ export class DetailsGameComponent implements AfterViewInit {
 
   updateEtat(){
     if((this.cadeaux==undefined)||(this.cadeaux.length<2)){
-      alert("ajouter au minimum trois cadeaux");
+      Swal.fire({
+        title: 'Error!',
+        text: 'ajouter au minimum trois cadeaux',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
     }else{
       this.service.updateEtatJeux(this.partenaire.id_part).subscribe(res=>{ 
 

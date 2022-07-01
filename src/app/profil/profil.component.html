@@ -5,79 +5,136 @@
 
 <h2 class="titre">Modifier votre profil !</h2>
 
-<div class="container rounded bg-white mt-5 mb-5" [formGroup]="form">
+<div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-4 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                    width="150px" src="{{ApiImg+this.partenaire.img}}"><span class="font-weight-bold">{{nom}}</span><span
-                    class="text-black-50">{{mail}}</span><span>
+                    width="150px" src="{{ApiImg+partenaire.img}}"><span class="font-weight-bold">{{partenaire.societe}}</span><span
+                    class="text-black-50">{{partenaire.mail}}</span><span>
                 </span></div>
         </div>
-        <div class="col-md-8 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Les paramètres de profil</h4>
+        <div style="  margin-left: auto;
+        margin-right: auto;" class="col-md-5 border-right">
+            <form [formGroup]="reactiveForm" #form="ngForm">
+                <div class="row">
+                  <div class="col mb-2">
+                    <label for="societe" class="form-label">Nom de l'organisme :</label>
+                    <input type="text" id="societe" name="societe" formControlName="societe" required minlength="2" maxlength="250" class="form-control form-control-sm" [class.is-invalid]="societe.invalid && (societe.dirty || societe.touched)">
+                    <div *ngIf="societe.invalid && (societe.dirty || societe.touched)" class="invalid-feedback">
+                      <div *ngIf="societe.errors?.['required']">
+                        champ obligatoire.
+                      </div>
+                      <div *ngIf="societe.errors?.['minlength']">
+                        au minimum 3 caractère.
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="about">Nom de l'organisme</label>
-                        <div>
-                            <input type="text" class="form-control" name="dateDebut" placeholder="Nom de l'organisme"
-                                formControlName="nom">
-                        </div>
+              
+                <div class="row">
+                  <div class="col mb-2">
+                    <label for="mail" class="form-label">Email:</label>
+                    <input type="mail" id="mail" name="mail" formControlName="mail" placeholder="exemple@exemple.com" required minlength="1" maxlength="250" class="form-control form-control-sm" [class.is-invalid]="mail.invalid && (mail.dirty || mail.touched)">
+                    <div *ngIf="mail.invalid && (mail.dirty || mail.touched)" class="invalid-feedback">
+                      <div *ngIf="mail.errors?.['required']">
+                        champ obligatoire.
+                      </div>
+                      <div *ngIf="!mail.errors?.['required'] && !mail.errors?.['minlength'] && !mail.errors?.['maxlength'] && mail.errors?.['emailValidator']">
+                        Format email invalide.
+                      </div>
                     </div>
-                    <div class="col-md-12">
-                        <br>
-                        <label for="about">Fax</label>
-                        <div>
-                            <input type="text" class="form-control" name="dateDebut" placeholder="Fax"
-                                formControlName="fax">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-2">
+                    <label for="mdp" class="form-label">Mot de passe:</label>
+                    <div class="input-group input-group-sm has-validation">
+                      <input [type]="showPassword ? 'text' : 'password'" id="mdp" name="mdp" formControlName="mdp" required minlength="8" class="form-control form-control-sm" [class.is-invalid]="mdp.invalid && (mdp.dirty || mdp.touched)">
+                      <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                        </svg>
+                      </button>
+                      <div *ngIf="mdp.invalid && (mdp.dirty || mdp.touched)" class="invalid-feedback">
+                        <div *ngIf="mdp.errors?.['required']">
+                          champ obligatoire.
                         </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br>
-                        <label for="about">Télephone</label>
-                        <div>
-                            <input type="text" class="form-control" name="dateDebut" placeholder="Télephone"
-                                formControlName="tel">
+                        <div *ngIf="mdp.errors?.['minlength']">
+                          au minimum 8 caractère.
                         </div>
+                      </div>
                     </div>
-                    <div class="col-md-12">
-                        <br>
-                        <label for="about">Code Postal</label>
-                        <div>
-                            <input type="text" class="form-control" name="dateDebut" placeholder="Code Postal"
-                                formControlName="codePostal">
-                        </div>
+                  </div>
+                </div>
+                <!--1-->
+                <div class="row">
+                  <div class="col mb-2">
+                    <label for="codePostal" class="form-label">code Postal :</label>
+                    <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" id="codePostal" name="codePostal" formControlName="codePostal"  required minlength="1" maxlength="250" class="form-control form-control-sm" [class.is-invalid]="codePostal.invalid && (codePostal.dirty || codePostal.touched)">
+                    <div *ngIf="codePostal.invalid && (codePostal.dirty || codePostal.touched)" class="invalid-feedback">
+                      <div *ngIf="codePostal.errors?.['required']">
+                        champ obligatoire.
+                      </div>
+                      <div *ngIf="codePostal.errors?.['minlength']">
+                        au minimum 4 chiffre.
+                      </div>
+      
                     </div>
-                    <div class="col-md-12">
-                        <br>
-                        <label for="about">Mail</label>
-                        <div>
-                            <input type="text" class="form-control" name="dateDebut" placeholder="Mail"
-                                formControlName="mail">
-                        </div>
+                  </div>
+                </div>
+                <!--2-->
+                <div class="row">
+                  <div class="col mb-2">
+                    <label for="tel" class="form-label">tel :</label>
+                    <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" id="tel" name="tel" formControlName="tel"  required minlength="8" maxlength="10" class="form-control form-control-sm" [class.is-invalid]="tel.invalid && (tel.dirty || tel.touched)">
+                    <div *ngIf="tel.invalid && (tel.dirty || tel.touched)" class="invalid-feedback">
+                      <div *ngIf="tel.errors?.['required']">
+                        champ obligatoire.
+                      </div>
+                      <div *ngIf="tel.errors?.['minlength']">
+                        au minimum 8 chiffre.
+                      </div>
+  
                     </div>
-                    <div class="col-md-12">
-                        <br>
-                        <label for="about">Mot de passe</label>
-                        <div>
-                            <input type="password" class="form-control" name="dateDebut" placeholder="Mot de passe"
-                                formControlName="mdp">
+                  </div>
+                </div>
+                <!--3-->
+                <div class="row">
+                  <div class="col mb-2">
+                    <label for="Fax" class="form-label">Fax :</label>
+                    <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" id="Fax" name="Fax" formControlName="Fax"  required minlength="8" maxlength="10" class="form-control form-control-sm" [class.is-invalid]="Fax.invalid && (Fax.dirty || Fax.touched)">
+                    <div *ngIf="Fax.invalid && (Fax.dirty || Fax.touched)" class="invalid-feedback">
+                      <div *ngIf="Fax.errors?.['required']">
+                        champ obligatoire.
+                      </div>
+                      <div *ngIf="Fax.errors?.['minlength']">
+                        au minimum 8 chiffre.
+                      </div>
+  
+                    </div>
+                  </div>
+                </div>
+                <!--4-->
+                <div class="row">
+                  <div class="col mb-2">
+                    <label for="img" class="form-label">Image :</label>
+                    <input (change)="onFileSelected($event)"  type="file" id="img" name="img" formControlName="img"  class="form-control form-control-sm" [class.is-invalid]="img.invalid && (img.dirty || img.touched)">
+                    <div *ngIf="img.invalid && (img.dirty || img.touched)" class="invalid-feedback">
+                      <div *ngIf="img.errors?.['required']">
+                        champ obligatoire.
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br>
-                        <label for="about">image</label>
-                    <div>
-                        <input type="file" name="file" (change)="onFileSelected($event)">
-                    </div>
-                    </div>
+                <div class="row">
+                  <div class="col mb-2 d-grid">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="validate()">Valider</button>
+                  </div>
                 </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button"
-                        (click)="Update()">Mise à jour le profil</button></div>
-            </div>
+              </form>
+           
         </div>
     </div>
 </div>
