@@ -14,6 +14,7 @@ import { AddpromoComponent } from './promotions/addpromo/addpromo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FeedbacktableComponent } from './feedbacktable/feedbacktable.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -46,6 +47,7 @@ import { PromoPipe } from './pipes/promo.pipe';
     ReclamationComponent,
     FeedbackComponent,
     AddpromoComponent,
+    FeedbacktableComponent,
     LoginComponent,
     HeaderComponent,
     SidebarComponent,
