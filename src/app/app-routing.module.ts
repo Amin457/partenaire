@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DetailsGameComponent } from './details-game/details-game.component';
 import { FeedbackComponent } from './feedback/feedback.component';
-import { FeedbacktableComponent } from './feedbacktable/feedbacktable.component';
 import { AuthGuard } from './gaurd/guard.guard';
 import { GererFeedbacksComponent } from './gerer-feedbacks/gerer-feedbacks.component';
 import { HomeAllComponent } from './home-all/home-all.component';
@@ -31,7 +30,6 @@ const routes: Routes = [
   { path: 'réclamations', component:ReclamationComponent},
   { path: 'feedbacks', component: FeedbackComponent },
   { path: 'promotions/addpromo', component: AddpromoComponent },
-  { path: 'feedbacktable', component: FeedbacktableComponent },
   { path: 'repportRec', component: RepportReclamationsComponent },
   { path: 'jeux/details-game', component: DetailsGameComponent },
   { path: 'gererfeedbacks', component: GererFeedbacksComponent },
@@ -43,9 +41,15 @@ const routes: Routes = [
   
 { path: 'login', component: LoginComponent },
 
+  {
+     path: 'home',
+     canActivate:[ AuthGuard ],
+     loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+
 ];
 
 @NgModule({
+  
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
