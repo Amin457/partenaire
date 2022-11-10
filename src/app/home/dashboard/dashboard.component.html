@@ -1,0 +1,100 @@
+
+  <body>
+      <br>
+  
+      <div class="card shadow" style="width: 70rem; margin-left: auto; margin-right: auto;">
+          <div class="card-body">
+              <div class="row">
+                  <div class=" col-md-6">
+                      <h1>Main Dashboard</h1>
+                      <p>Bienvenue <b style="color:#608ce9;">Partenaire</b></p>
+                      <p>Vous trouvez çi dessous les informations nécessaires de cette semaine</p>
+                  </div>
+                  <br>
+                  <div class="text-right col-md-6">
+                      <img class="img-fluid px-3 px-sm-4 mt-3 mb-4 " style="width: 20rem;"
+                          src="../../assets/undraw_data_trends_re_2cdy.svg" alt="...">
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4 col-xl-3">
+                  <div class="card bg-c-blue order-card card shadow mb-4">
+                      <div class="card-block">
+                          <h4>Le total des réclamations</h4>
+                          <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>Accueil</span></h2>
+                          <span class="f-right">{{accueil}}</span>
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="col-md-4 col-xl-3">
+                  <div class="card bg-c-green order-card card shadow mb-4">
+                      <div class="card-block">
+                          <h4 class="m-b-20">Le total des réclamations</h4>
+                          <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>Qualité</span></h2>
+                          <span class="f-right">{{qualite}}</span>
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="col-md-4 col-xl-3">
+                  <div class="card bg-c-yellow order-card card shadow mb-4">
+                      <div class="card-block">
+                          <h4 class="m-b-20">Le total des réclamations</h4>
+                          <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>Personnel</span></h2>
+                          <span class="f-right">{{personnel}}</span>
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="col-md-4 col-xl-3">
+                  <div class="card bg-c-pink order-card card shadow mb-4">
+                      <div class="card-block">
+                          <h4 class="m-b-20">Le total des réclamations</h4>
+                          <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>Prix</span></h2>
+                          <span class="f-right">{{prix}}</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+  
+      </div>
+    
+  
+  
+      <div class="card card shadow mb-4" style="margin-left: auto; margin-right: auto; display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;">
+          <div class="card-body grid-child">
+              <canvas style="width: 100px;" baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                  [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+                  [chartType]="barChartType" [colors]="chartColors">
+              </canvas>
+          </div>
+          <div class="card-body grid-child">
+              <canvas style="width: 100px;" baseChart [datasets]="barChartData1" [labels]="barChartLabels1"
+                  [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+                  [chartType]="barChartType" [colors]="chartColors1">
+              </canvas>
+          </div>
+          
+      </div>
+      
+      <div class="card shadow mb-4" style="margin-left: auto; margin-right: auto;width: 50%;height: 60%;">
+          <div class="card-body">
+            <div style="display: flex;
+            justify-content: center;" class="chartjs-block" >
+         <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2"
+         [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+         [chartType]="barChartType" [colors]="chartColors">
+     </canvas>
+    </div>
+  </div>
+  </div>
+  </body>
+

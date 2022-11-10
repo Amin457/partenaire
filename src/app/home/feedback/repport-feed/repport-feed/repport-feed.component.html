@@ -1,0 +1,61 @@
+
+
+<h2 class="titre">Statistiques des Feedbacks !</h2>
+
+<div class="row" style="margin-left: auto; margin-right: auto;">
+    <div class=" form-group col-md-6">
+        <label for="name" class="col-sm-7 control-label">Date de début</label>
+        <div class="col-sm-6">
+            <input type="date" class="form-control" name="dateDebut" [(ngModel)]="dateDebut1"
+                placeholder="Date de début">
+        </div>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="name" class="col-sm-7 control-label">Date de fin</label>
+        <div class="col-sm-6">
+            <input type="date" class="form-control" name="dateFin" [(ngModel)]="dateFin1" placeholder="date de Fin">
+        </div>
+    </div>
+    <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="width: 12rem;"
+        (click)="onGenerate()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-download" viewBox="0 0 16 16">
+            <path
+                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+            <path
+                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+        </svg>Génerer les Statistiques</button>
+</div>
+
+<br>
+<h4 class="etat">Le total des feedbacks: {{nbrFeed}}</h4>
+
+<div class="row">
+    <div style="display: flex;
+    justify-content: center;" class="chartjs-block">
+      <canvas height="600" width="1100" baseChart 
+          [datasets]="lineChartData" 
+          [labels]="lineChartLabels" 
+          [options]="lineChartOptions"
+          [colors]="lineChartColors" 
+          [legend]="lineChartLegend" 
+          [chartType]="'line'" 
+          [plugins]="lineChartPlugins">
+      </canvas>
+  </div>
+    <div class="col-xl-8 col-lg-7" style=" width:45rem; margin-left: auto; margin-right: auto;" *ngFor="let item of question">
+
+        <!-- Pie Chart -->
+        <div class="card shadow mb-4">
+
+            <div class="card-body" >
+                <h3 class="m-0" style=" font: Regular 400;">{{item.description}}</h3>
+                    <h5>{{item.nbr}} réponses</h5>
+                <div class="chart-area" style="width: 34rem; margin-left: auto; margin-right: auto;">
+                    <app-chartfeed [id_question]="item.id_question" [dateDebut]="dateDebut1" [dateFin]="dateFin1" [id_part]="partenaire.id_part"></app-chartfeed>
+                   <!-- -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

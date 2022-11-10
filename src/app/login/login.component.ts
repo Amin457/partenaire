@@ -183,7 +183,7 @@ export class LoginComponent implements OnInit {
         return false;
       }else{
         localStorage.setItem('token',res.token);
-        this.router.navigate(['dashboard/home']);
+        this.router.navigate(['home/']);
         return false;
       }
       },
